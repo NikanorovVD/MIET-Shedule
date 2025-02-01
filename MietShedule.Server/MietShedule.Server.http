@@ -1,0 +1,6 @@
+@ReactApp2.Server_HostAddress = http://localhost:5053
+
+GET {{ReactApp2.Server_HostAddress}}
+Accept: application/json
+
+###
