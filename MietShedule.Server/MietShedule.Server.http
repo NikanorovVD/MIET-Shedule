@@ -1,6 +1,6 @@
-@ReactApp2.Server_HostAddress = http://localhost:5053
+@MietShedule.Server_HostAddress = http://localhost:5053
 
-GET {{ReactApp2.Server_HostAddress}}
+GET {{MietShedule.Server_HostAddress}}/Groups/
 Accept: application/json
 
 ###

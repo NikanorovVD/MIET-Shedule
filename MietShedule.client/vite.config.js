@@ -12,7 +12,7 @@ const baseFolder =
         : `${process.env.HOME}/.aspnet/https`;
 
 const certificateArg = process.argv.map(arg => arg.match(/--name=(?<value>.+)/i)).filter(Boolean)[0];
-const certificateName = certificateArg ? certificateArg.groups.value : "reactapp2.client";
+const certificateName = certificateArg ? certificateArg.groups.value : "MietShedule.client";
 
 if (!certificateName) {
     console.error('Invalid certificate name. Run this script in the context of an npm/yarn script or pass --name=<<app>> explicitly.')
@@ -46,7 +46,11 @@ export default defineConfig({
     },
     server: {
         proxy: {
-            '^/weatherforecast': {
+            '^/Groups': {
+                target: 'https://localhost:7056/',
+                secure: false
+            },
+            '^/Shedule':{
                 target: 'https://localhost:7056/',
                 secure: false
             }

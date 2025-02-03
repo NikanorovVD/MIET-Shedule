@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using MietShedule.Server.Automapper;
+using ServiceLayer.Services;
 
 namespace MietShedule.Server
 {
@@ -23,7 +24,9 @@ namespace MietShedule.Server
 
         public static void AddAppServices(this IServiceCollection services)
         {
-
+            services.AddScoped<CoupleService>();
+            services.AddScoped<DateFilterService>();
+            services.AddScoped<GroupService>();
         }
 
         public static void AddAppValidation(this IServiceCollection services)

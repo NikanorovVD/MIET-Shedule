@@ -22,6 +22,7 @@ namespace TaskManager.Server
 
             builder.Services.AddAppDbContext(builder.Configuration);
             builder.Services.AddHostedService<DatabaseInitService>();
+            builder.Services.AddHttpClient();
 
             var app = builder.Build();
 
