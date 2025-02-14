@@ -80,6 +80,8 @@ export default function TeacherSection() {
                 </>
             }
 
+            
+
 
             {shedule != undefined &&
                 shedule.map(c =>

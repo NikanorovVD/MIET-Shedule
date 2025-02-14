@@ -1,12 +1,12 @@
 .couple{
     margin: 10px;
     border: 1px solid black;
-    width: 400px;
+    width: 600px;
 }
 .order{ 
-    font-size: 36px;
+    font-size: 20px;
     background-color: #eaeaea;
-    width: 50px;
+    width: 70px;
 }
 .name{
     background-color: #eaeaea;
@@ -17,14 +17,17 @@
     background-color: #eaeaea;
     text-align: left;
     font-size: 12px;
+    margin: 0;
 }
 .group{ 
     background-color: #eaeaea;
+    text-align: left;
     font-size: 12px;
+    margin: 0;
 }
 .date{ 
     background-color: #eaeaea;
-    font-size: 12px;
+    font-size: 20px;
 }
 .auditorium{
     background-color: #eaeaea;
@@ -34,5 +37,6 @@
 .time{
     background-color: #eaeaea;
     font-size: 12px;
-    width: 50px;
+    width: 70px;
+    margin: 0;
 }

@@ -1,25 +1,27 @@
 import "./Couple.css"
 
 export default function Couple({ order, name, teacher, time, auditorium, date, group, ...props }) {
+    const parsedDate = new Date(date)
+    const zeroPad = (num, places) => String(num).padStart(places, '0')
+    const day = zeroPad(parsedDate.getDate(), 2)
+    const month = zeroPad(parsedDate.getMonth()+1, 2)
     return (
         <table {...props} className="couple">
             <tbody>
                 <tr>
-                    <td className="date">{date}</td>
-                    <td className="name">{name}</td>
+                    <td className="date">{`${day}.${month}`}</td>
+                    <td rowSpan={2} className="name">{name}
+                        <div>
+                            <p className="group">{group}</p>
+                            <p className="teacher">{teacher} {auditorium}</p>
+                            <p className="time">{time}</p>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
-                    <td rowSpan={2} className="order">{order}</td>
-                    <td className="group">{group}</td>
+                    <td className="order">{order}</td>
+                    
                 </tr>
-                <tr>
-                    <td className="teacher">{teacher}</td>
-                </tr>
-                <tr>
-                    <td className="time">{time}</td>
-                    <td className="auditorium">{auditorium}</td>
-                </tr>
-
             </tbody>
         </table>
     )

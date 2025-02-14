@@ -1,12 +1,12 @@
 .couple{
     margin: 10px;
     border: 1px solid black;
-    width: 400px;
+    width: 600px;
 }
 .order{ 
     font-size: 36px;
     background-color: #eaeaea;
-    width: 50px;
+    width: 70px;
 }
 .name{
     background-color: #eaeaea;
@@ -30,5 +30,5 @@
 .time{
     background-color: #eaeaea;
     font-size: 12px;
-    width: 50px;
+    width: 70px;
 }
