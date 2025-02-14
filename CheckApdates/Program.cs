@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using ServiceLayer.Services.Parsing;
 using System;
+using System.Text.Encodings.Web;
+using System.Text.Json;
 
 namespace CheckApdates
 {
@@ -32,12 +34,23 @@ namespace CheckApdates
                 );
 
             var mietCouples = await parserService.GetMietCouplesAsync();
-            var parsedCouples = mietCouples.Select(mc => adapterService.Adapt(mc));
-            var currentCouples = appDbContext.Couples.ToArray();
+            var couples = mietCouples.Select(c => adapterService.Adapt(c));
 
-            //if(parsedCouples.Count != currentCouples.Length)
-            
-            Console.WriteLine("SheduleParser: Done");
+
+            await using FileStream createStream = File.Create(@"C:/Files/parsed.json");
+            await JsonSerializer.SerializeAsync(createStream, couples, options: new JsonSerializerOptions()
+            {
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                WriteIndented = true
+            });
+
+            await using FileStream createStream2 = File.Create(@"C:/Files/origin.json");
+            await JsonSerializer.SerializeAsync(createStream2, mietCouples, options: new JsonSerializerOptions()
+            {
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                WriteIndented = true
+            });
+
         }
     }
 }

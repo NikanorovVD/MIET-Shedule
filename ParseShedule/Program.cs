@@ -16,7 +16,6 @@ namespace ParseShedule
                 .SetBasePath(Directory.GetParent(workingDirectory).Parent.Parent.Parent.FullName)
                 .AddJsonFile("MietShedule.Server/appsettings.Development.json", optional: false);
 
-            string path = AppContext.BaseDirectory;
             IConfiguration Configuration = builder.Build();
 
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();

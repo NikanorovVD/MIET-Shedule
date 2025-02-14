@@ -27,6 +27,7 @@ namespace MietShedule.Server
             services.AddScoped<CoupleService>();
             services.AddScoped<DateFilterService>();
             services.AddScoped<GroupService>();
+            services.AddScoped<TeacherService>();
         }
 
         public static void AddAppValidation(this IServiceCollection services)

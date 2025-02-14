@@ -53,6 +53,10 @@ export default defineConfig({
             '^/Shedule':{
                 target: 'https://localhost:7056/',
                 secure: false
+            },
+            '^/Teacher':{
+                target: 'https://localhost:7056/',
+                secure: false
             }
         },
         port: 5173,

@@ -24,12 +24,12 @@ namespace MietShedule.Server.Controllers
             return await _coupleService.GetGroupCouplesAsync(group, date);
         }
 
-        [HttpGet("teacher")]
-        public async Task<IEnumerable<CoupleDto>> GetGroupShedule(string searchString, string startDateString, string endDateString)
+        [HttpGet("teacher/{teacher}")]
+        public async Task<IEnumerable<CoupleDto>> GetGroupShedule(string teacher, string startDate, string endDate)
         {
-            DateTime startDate = DateTime.ParseExact(startDateString, DateFormat.Format, CultureInfo.InvariantCulture);
-            DateTime endDate = DateTime.ParseExact(endDateString, DateFormat.Format, CultureInfo.InvariantCulture);
-            return _coupleService.GetTeacherCouples(searchString, startDate, endDate);
+            DateTime startDateParsed = DateTime.ParseExact(startDate, DateFormat.Format, CultureInfo.InvariantCulture);
+            DateTime endDateParsed = DateTime.ParseExact(endDate, DateFormat.Format, CultureInfo.InvariantCulture);
+            return _coupleService.GetTeacherCouples(teacher, startDateParsed, endDateParsed);
         }
     }
 }

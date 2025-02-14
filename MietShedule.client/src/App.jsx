@@ -3,6 +3,7 @@ import Header from './Components/Header';
 import { useState } from 'react';
 import SheduleSection from './Components/SheduleSection';
 import TabSection from './Components/TabSection';
+import TeacherSection from './Components/TeacherSection';
 
 function App() {
     const [tab, setTab] = useState('shedule')
@@ -14,7 +15,7 @@ function App() {
                     < SheduleSection />
                 )}
                 {tab == 'teacher' && (
-                    <></>
+                    <TeacherSection />
                 )}
             </main>
         </>
