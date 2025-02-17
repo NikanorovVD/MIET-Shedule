@@ -22,7 +22,7 @@
 .group{ 
     background-color: #eaeaea;
     text-align: left;
-    font-size: 12px;
+    font-size: 16px;
     margin: 0;
 }
 .date{ 
@@ -33,6 +33,7 @@
     background-color: #eaeaea;
     text-align: left;
     font-size: 12px;
+    margin: 0;
 }
 .time{
     background-color: #eaeaea;

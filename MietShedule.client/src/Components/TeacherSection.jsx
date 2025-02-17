@@ -60,7 +60,7 @@ export default function TeacherSection() {
             {teacherList != undefined &&
                 <>
                     <div>
-                        <input type="text" list="teachers" value={teacher} onChange={(event) => setTeacher(event.target.value)} />
+                        <input id="teacher_input" type="text" list="teachers" value={teacher} onChange={(event) => setTeacher(event.target.value)} />
                     </div>
                     <datalist id="teachers">
                         {teacherList.map(g => <option key={g}>{g}</option>)}
@@ -78,9 +78,7 @@ export default function TeacherSection() {
                         </input>
                     </div>
                 </>
-            }
-
-            
+            }          
 
 
             {shedule != undefined &&

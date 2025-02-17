@@ -2,6 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using DataLayer;
 using Microsoft.EntityFrameworkCore;
+using ServiceLayer.Constants;
 using ServiceLayer.Extensions;
 using ServiceLayer.Models;
 using ServiceLayer.QueryObjects;
@@ -39,11 +40,21 @@ namespace ServiceLayer.Services
                 _appDbContext.Couples
                     .Where(c => EF.Functions.Like(c.NormalizedTeacher, $"%{teacher.ToUpper()}%"))
                     .Where(_dateFilterService.DateFilter(date))
-                    .ProjectTo<CoupleDto>(_mapper.ConfigurationProvider)
-                    .WithDate(date)
-                    .OrderBy(c => c.Date)
-                    .ThenBy(c => c.Order)
-            );
+                    .GroupBy(c => c.Order)
+                    .Select(c => new CoupleDto()
+                    {
+                        Auditorium = string.Join(", ", c.Select(c => c.Auditorium).Distinct()),
+                        Date = date,
+                        Group = string.Join(", ", c.Select(c => c.Group).Distinct()),
+                        Name = string.Join(", ", c.Select(c => c.Name).Distinct()),
+                        Order = c.First().Order,
+                        Teacher = c.First().Teacher,
+                        Time = CoupleTime.GetTime(c.First().Order),
+                    })
+            )
+            .OrderBy(c => c.Date)
+            .ThenBy(c => c.Order); 
+
         }
 
         private IEnumerable<DateTime> DatesBetween(DateTime startDate, DateTime endDate)
