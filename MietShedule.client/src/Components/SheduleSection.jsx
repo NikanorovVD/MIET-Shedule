@@ -7,7 +7,7 @@ export default function SheduleSection() {
 
     const url = window.location.href
     const urlParams = new URLSearchParams(url)
-    const defaultGroup = urlParams.get("https://localhost:5173/?group")
+    const defaultGroup = urlParams.get("https://localhost:5173/?group") ?? ""
 
     const [group, setGroup] = useState(defaultGroup)
     const [groupsList, setGroupsList] = useState()

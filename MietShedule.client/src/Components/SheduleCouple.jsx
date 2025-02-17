@@ -5,15 +5,14 @@ export default function SheduleCouple({ order, name, teacher, time, auditorium, 
         <table {...props} className="couple">
             <tbody>
                 <tr>
-                    <td rowSpan={2} className="order">{order}</td>
-                    <td className="name">{name}</td>
-                </tr>
-                <tr>
-                    <td className="teacher">{teacher}</td>
-                </tr>
-                <tr>
-                    <td className="time">{time}</td>
-                    <td className="auditorium">{auditorium}</td>
+                    <td className="order2">{order}</td>
+                    <td className="name">{name}
+                        <div>
+                            <p className="teacher">{teacher}</p>
+                            <p className="auditorium">{auditorium}</p>
+                            <p className="time">{time}</p>
+                        </div>
+                    </td>
                 </tr>
 
             </tbody>

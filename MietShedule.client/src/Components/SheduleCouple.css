@@ -3,10 +3,10 @@
     border: 1px solid black;
     width: 600px;
 }
-.order{ 
-    font-size: 36px;
+.order2{ 
+    font-size: 20px;
     background-color: #eaeaea;
-    width: 70px;
+    width: 35px;
 }
 .name{
     background-color: #eaeaea;
@@ -17,18 +17,27 @@
     background-color: #eaeaea;
     text-align: left;
     font-size: 12px;
+    margin: 0;
 }
 .group{ 
     background-color: #eaeaea;
-    font-size: 12px;
+    text-align: left;
+    font-size: 16px;
+    margin: 0;
+}
+.date{ 
+    background-color: #eaeaea;
+    font-size: 20px;
 }
 .auditorium{
     background-color: #eaeaea;
     text-align: left;
     font-size: 12px;
+    margin: 0;
 }
 .time{
     background-color: #eaeaea;
     font-size: 12px;
     width: 70px;
+    margin: 0;
 }
