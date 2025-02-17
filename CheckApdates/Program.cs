@@ -1,10 +1,9 @@
 ﻿using DataLayer;
+using DataLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using ServiceLayer.Services.Parsing;
-using System;
-using System.Text.Encodings.Web;
-using System.Text.Json;
+
 
 namespace CheckApdates
 {
@@ -13,9 +12,9 @@ namespace CheckApdates
         static async Task Main(string[] args)
         {
             string workingDirectory = Environment.CurrentDirectory;
-
+            string basePath = Directory.GetParent(workingDirectory).Parent.Parent.Parent.FullName;
             var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetParent(workingDirectory).Parent.Parent.Parent.FullName)
+                .SetBasePath(basePath)
                 .AddJsonFile("MietShedule.Server/appsettings.Development.json", optional: false);
 
             string path = AppContext.BaseDirectory;
@@ -24,33 +23,25 @@ namespace CheckApdates
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
             optionsBuilder.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
 
+            string resultPath = Path.Combine(basePath, "check_apdates_out.txt");
             MietSheduleAdapterService adapterService = new();
-            SheduleParserService parserService = new(new HttpClient());
-            AppDbContext appDbContext = new(optionsBuilder.Options);
-            SheduleInitializerService sheduleInitializerService = new SheduleInitializerService(
-                adapterService,
-                parserService,
-                appDbContext
-                );
+            SheduleParserService parserService = new(new HttpClient(), adapterService);
+            AppDbContext dbContext = new(optionsBuilder.Options);
+            CheckApdatesService checkApdatesService = new(dbContext, resultPath);
+            SheduleInitializerService initializerService = new(adapterService, parserService, dbContext);
 
-            var mietCouples = await parserService.GetMietCouplesAsync();
-            var couples = mietCouples.Select(c => adapterService.Adapt(c));
-
-
-            await using FileStream createStream = File.Create(@"C:/Files/parsed.json");
-            await JsonSerializer.SerializeAsync(createStream, couples, options: new JsonSerializerOptions()
+            while (true)
             {
-                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                WriteIndented = true
-            });
-
-            await using FileStream createStream2 = File.Create(@"C:/Files/origin.json");
-            await JsonSerializer.SerializeAsync(createStream2, mietCouples, options: new JsonSerializerOptions()
-            {
-                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                WriteIndented = true
-            });
-
+                IEnumerable<Couple> couples = await parserService.GetAdaptedCouplesAsync();
+                bool needApdate = await checkApdatesService.CheckApdatesAsync(couples);
+                Console.WriteLine($"Need apdates: {needApdate}");
+                if (needApdate)
+                {
+                    await initializerService.CreateSheduleAsync(couples);
+                    Console.WriteLine("Apdate done");
+                }
+                await Task.Delay(new TimeSpan(0, 1, 0));
+            }
         }
     }
 }

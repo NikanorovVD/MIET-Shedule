@@ -27,7 +27,7 @@ namespace ParseShedule
                 appDbContext: new AppDbContext(optionsBuilder.Options)
                 );
 
-            await sheduleInitializerService.CreateShedule();
+            await sheduleInitializerService.CreateSheduleAsync();
             Console.WriteLine("SheduleParser: Done");
         }
     }

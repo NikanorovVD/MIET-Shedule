@@ -1,4 +1,5 @@
-﻿using ServiceLayer.Constants;
+﻿using DataLayer.Entities;
+using ServiceLayer.Constants;
 using ServiceLayer.Extensions;
 using ServiceLayer.Models.Parser;
 using System.Text.Json;
@@ -8,12 +9,20 @@ namespace ServiceLayer.Services.Parsing
     public class SheduleParserService
     {
         private readonly HttpClient _httpClient;
+        private readonly MietSheduleAdapterService _adapterService;
         const string _sheduleUrl = @"https://www.miet.ru/schedule/data";
         const string _groupsUrl = @"https://www.miet.ru/schedule/groups";
 
-        public SheduleParserService(HttpClient httpClient)
+        public SheduleParserService(HttpClient httpClient, MietSheduleAdapterService adapterService)
         {
             _httpClient = httpClient;
+            _adapterService = adapterService;
+        }
+
+        public async Task<IEnumerable<Couple>> GetAdaptedCouplesAsync()
+        {
+            var mietCouples = await GetMietCouplesAsync();
+            return mietCouples.Select(c => _adapterService.Adapt(c));
         }
 
         public async Task<IEnumerable<MietCouple>> GetMietCouplesAsync()

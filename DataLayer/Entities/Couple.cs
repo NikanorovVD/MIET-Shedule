@@ -19,5 +19,17 @@
         public string NormalizedTeacher { get; set; }
         public string Group { get; set; }
         public WeekType WeekType { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Order}{Environment.NewLine}" +
+                $"{Day}{Environment.NewLine}" +
+                $"{Name}{Environment.NewLine}" +
+                $"{Auditorium}{Environment.NewLine}" +
+                $"{Teacher}{Environment.NewLine}" +
+                $"{Group}{Environment.NewLine}" +
+                $"{WeekType}{Environment.NewLine}";
+        }
     }
+
 }

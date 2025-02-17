@@ -1,30 +1,36 @@
 ﻿using DataLayer;
 using DataLayer.Entities;
 using Microsoft.EntityFrameworkCore;
-using ServiceLayer.Models.Parser;
+
 
 namespace ServiceLayer.Services.Parsing
 {
     public class SheduleInitializerService
     {
-        private readonly MietSheduleAdapterService _adapterService;
         private readonly SheduleParserService _parserService;
         private readonly AppDbContext _appDbContext;
 
         public SheduleInitializerService(MietSheduleAdapterService adapterService, SheduleParserService parserService, AppDbContext appDbContext)
         {
-            _adapterService = adapterService;
             _parserService = parserService;
             _appDbContext = appDbContext;
         }
 
-        public async Task CreateShedule()
+        public async Task CreateSheduleAsync()
         {
             await _appDbContext.Database.MigrateAsync();
-            IEnumerable<MietCouple> mietCouples = await _parserService.GetMietCouplesAsync();
-            IEnumerable<Couple> couples = mietCouples.Select(mc => _adapterService.Adapt(mc));
+            IEnumerable<Couple> couples = await _parserService.GetAdaptedCouplesAsync();
 
+            await _appDbContext.Database.ExecuteSqlRawAsync("TRUNCATE TABLE public.\"Couples\"");
             await _appDbContext.Couples.AddRangeAsync(couples);
+            await _appDbContext.SaveChangesAsync();
+        }
+
+        public async Task CreateSheduleAsync(IEnumerable<Couple> parsedCouples)
+        {
+            await _appDbContext.Database.MigrateAsync();
+            await _appDbContext.Database.ExecuteSqlRawAsync("TRUNCATE TABLE public.\"Couples\"");
+            await _appDbContext.Couples.AddRangeAsync(parsedCouples);
             await _appDbContext.SaveChangesAsync();
         }
     }
