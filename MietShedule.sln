@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "DataLayer\Data
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceLayer", "ServiceLayer\ServiceLayer.csproj", "{87D859D2-0A1E-4D3F-86B5-255916EC6542}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParseShedule", "ParseShedule\ParseShedule.csproj", "{56E56BFA-936E-4289-9D9E-915A3B17C7F0}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckApdates", "CheckApdates\CheckApdates.csproj", "{B57F41A7-7853-4509-B559-EB3B78980D54}"
 EndProject
 Global
@@ -39,10 +37,6 @@ Global
 		{87D859D2-0A1E-4D3F-86B5-255916EC6542}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87D859D2-0A1E-4D3F-86B5-255916EC6542}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87D859D2-0A1E-4D3F-86B5-255916EC6542}.Release|Any CPU.Build.0 = Release|Any CPU
-		{56E56BFA-936E-4289-9D9E-915A3B17C7F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{56E56BFA-936E-4289-9D9E-915A3B17C7F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{56E56BFA-936E-4289-9D9E-915A3B17C7F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{56E56BFA-936E-4289-9D9E-915A3B17C7F0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B57F41A7-7853-4509-B559-EB3B78980D54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B57F41A7-7853-4509-B559-EB3B78980D54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B57F41A7-7853-4509-B559-EB3B78980D54}.Release|Any CPU.ActiveCfg = Release|Any CPU
