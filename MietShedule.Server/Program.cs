@@ -9,8 +9,6 @@ namespace TaskManager.Server
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.ConfigureApp(builder.Configuration);
-
             builder.Services.AddControllers();
             builder.Services.AddAppServices();
 

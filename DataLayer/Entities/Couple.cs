@@ -1,13 +1,5 @@
 ﻿namespace DataLayer.Entities
 {
-    public enum WeekType
-    {
-        ПервыйЧислитель = 0,
-        ВторойЧислитель = 1,
-        ПервыйЗнаменатель = 2,
-        ВторойЗнаменатель = 3
-    }
-
     public class Couple
     {
         public int Id {  get; set; }
@@ -19,17 +11,12 @@
         public string NormalizedTeacher { get; set; }
         public string Group { get; set; }
         public WeekType WeekType { get; set; }
-
-        public override string ToString()
-        {
-            return $"{Order}{Environment.NewLine}" +
-                $"{Day}{Environment.NewLine}" +
-                $"{Name}{Environment.NewLine}" +
-                $"{Auditorium}{Environment.NewLine}" +
-                $"{Teacher}{Environment.NewLine}" +
-                $"{Group}{Environment.NewLine}" +
-                $"{WeekType}{Environment.NewLine}";
-        }
     }
-
+    public enum WeekType
+    {
+        ПервыйЧислитель = 0,
+        ВторойЧислитель = 1,
+        ПервыйЗнаменатель = 2,
+        ВторойЗнаменатель = 3
+    }
 }

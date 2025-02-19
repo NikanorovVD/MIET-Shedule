@@ -18,12 +18,8 @@ namespace ServiceLayer.Services.Parsing
 
         public async Task CreateSheduleAsync()
         {
-            await _appDbContext.Database.MigrateAsync();
             IEnumerable<Couple> couples = await _parserService.GetAdaptedCouplesAsync();
-
-            await _appDbContext.Database.ExecuteSqlRawAsync("TRUNCATE TABLE public.\"Couples\"");
-            await _appDbContext.Couples.AddRangeAsync(couples);
-            await _appDbContext.SaveChangesAsync();
+            await CreateSheduleAsync(couples);
         }
 
         public async Task CreateSheduleAsync(IEnumerable<Couple> parsedCouples)

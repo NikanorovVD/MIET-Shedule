@@ -1,6 +1,7 @@
 ﻿using DataLayer;
 using DataLayer.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
@@ -27,20 +28,16 @@ namespace ServiceLayer.Services.Parsing
 
             IEnumerable<Couple> changed = parsedCouples.Except(currentCouples, new CoupleComparer());
             int changedCount = changed.Count();
-            //Console.WriteLine(string.Join($"==========================={Environment.NewLine}", changed));
-
 
             string log = DateTime.Now.Date.ToString("d", CultureInfo.CreateSpecificCulture("ru-RU"));
             log += Environment.NewLine;
             log += $"Couples on miet server: {parsedCount}{Environment.NewLine}";
             log += $"Couples on current database: {currentCount}{Environment.NewLine}";
             log += $"Need apdates for {changedCount} couples{Environment.NewLine}";
-            log += string.Join($"==========================={Environment.NewLine}", changed);
 
             Console.WriteLine(log);
             File.AppendAllText(logPath, log);
             Console.WriteLine($"Result write on {logPath}");
-            Console.WriteLine("Done");
 
             return parsedCount != currentCount
                 || changedCount != 0;

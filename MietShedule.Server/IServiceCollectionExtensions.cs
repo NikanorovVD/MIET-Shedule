@@ -32,35 +32,17 @@ namespace MietShedule.Server
 
         public static void AddAppValidation(this IServiceCollection services)
         {
-            //services.AddScoped<IValidator<CreateUserRequest>, CreateUserRequestValidator>();
-            //services.AddScoped<IValidator<UpdateUserRequest>, UpdateUserRequestValidator>();
-            //services.AddScoped<IValidator<AuthRequest>, AuthRequestValidator>();
 
-            //ValidatorOptions.Global.LanguageManager.Enabled = false;
-            //ValidatorOptions.Global.DefaultRuleLevelCascadeMode = CascadeMode.Stop;
-            //services.AddFluentValidationAutoValidation(opt =>
-            //{
-            //    opt.DisableDataAnnotationsValidation = true;
-            //});
         }
 
         public static void AddAppOpenApi(this IServiceCollection services)
         {
-            services.AddOpenApi(options =>
-            {
-                //options.AddDocumentTransformer<BearerSecuritySchemeTransformer>();
-            });
+            services.AddOpenApi();
         }
 
         public static void AddAppAutoMapper(this IServiceCollection services)
         {
             services.AddAutoMapper(typeof(AppMappingProfile));
-        }
-
-        public static void ConfigureApp(this IServiceCollection services, IConfiguration configuration)
-        {
-            //services.Configure<AdminSettings>(configuration.GetSection("AdminUser"));
-            //services.Configure<JwtSettings>(configuration.GetSection("JwtTokens"));
         }
 
         public static void AddAppDbContext(this IServiceCollection services, IConfiguration configuration)

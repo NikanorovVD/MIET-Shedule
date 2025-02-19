@@ -3,7 +3,6 @@ using AutoMapper.QueryableExtensions;
 using DataLayer;
 using Microsoft.EntityFrameworkCore;
 using ServiceLayer.Constants;
-using ServiceLayer.Extensions;
 using ServiceLayer.Models;
 using ServiceLayer.QueryObjects;
 

@@ -32,13 +32,19 @@ namespace CheckApdates
 
             while (true)
             {
-                IEnumerable<Couple> couples = await parserService.GetAdaptedCouplesAsync();
-                bool needApdate = await checkApdatesService.CheckApdatesAsync(couples);
-                Console.WriteLine($"Need apdates: {needApdate}");
-                if (needApdate)
+                try
                 {
-                    await initializerService.CreateSheduleAsync(couples);
-                    Console.WriteLine("Apdate done");
+                    IEnumerable<Couple> couples = await parserService.GetAdaptedCouplesAsync();
+                    bool needApdate = await checkApdatesService.CheckApdatesAsync(couples);
+                    if (needApdate)
+                    {
+                        await initializerService.CreateSheduleAsync(couples);
+                        Console.WriteLine("Apdate done");
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
                 }
                 await Task.Delay(new TimeSpan(0, 1, 0));
             }
