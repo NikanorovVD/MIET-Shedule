@@ -43,6 +43,7 @@ namespace ServiceLayer.Services.Parsing
         {
             public bool Equals(Couple? x, Couple? y)
             {
+                if (x == null || y == null) return x == null && y == null;
                 return
                     x.Name == y.Name &&
                     x.Group == y.Group &&
@@ -55,8 +56,9 @@ namespace ServiceLayer.Services.Parsing
 
             public int GetHashCode([DisallowNull] Couple obj)
             {
-                int hash = 17;
+                if (obj == null) return 0;
 
+                int hash = 17;
                 hash = hash * 23 + obj.Name.GetHashCode();
                 hash = hash * 23 + obj.Group.GetHashCode();
                 hash = hash * 23 + obj.WeekType.GetHashCode();
