@@ -10,12 +10,12 @@ namespace ServiceLayer.Services.Parsing
     public class CheckApdatesService
     {
         private readonly AppDbContext dbContext;
-        private readonly string logPath;
+        private readonly ILogger<CheckApdatesService> _logger;
 
-        public CheckApdatesService(AppDbContext dbContext, string logPath = "check_apdates_out.txt")
+        public CheckApdatesService(AppDbContext dbContext, ILogger<CheckApdatesService> logger)
         {
             this.dbContext = dbContext;
-            this.logPath = logPath;
+            _logger = logger;
         }
 
         public async Task<bool> CheckApdatesAsync(IEnumerable<Couple> parsedCouples)
@@ -29,18 +29,14 @@ namespace ServiceLayer.Services.Parsing
             IEnumerable<Couple> changed = parsedCouples.Except(currentCouples, new CoupleComparer());
             int changedCount = changed.Count();
 
-            string log = DateTime.Now.Date.ToString("d", CultureInfo.CreateSpecificCulture("ru-RU"));
-            log += Environment.NewLine;
-            log += $"Couples on miet server: {parsedCount}{Environment.NewLine}";
-            log += $"Couples on current database: {currentCount}{Environment.NewLine}";
-            log += $"Need apdates for {changedCount} couples{Environment.NewLine}";
+            _logger.LogInformation("Couples on miet server: {ParsedCount}", parsedCount);
+            _logger.LogInformation("Couples on current database: {CurrentCount}", currentCount);
+            _logger.LogInformation("Need apdates for {ChangedCount} couples", changedCount);
 
-            Console.WriteLine(log);
-            File.AppendAllText(logPath, log);
-            Console.WriteLine($"Result write on {logPath}");
+            bool needApdate = parsedCount != currentCount || changedCount != 0;
+            _logger.LogInformation("Apdate are required: {NeedApdate}", needApdate);
 
-            return parsedCount != currentCount
-                || changedCount != 0;
+            return needApdate;
         }
 
         class CoupleComparer : IEqualityComparer<Couple>
