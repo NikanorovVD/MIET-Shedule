@@ -9,7 +9,7 @@ namespace ServiceLayer.QueryObjects
         {
             return couples.Select(c =>
                 {
-                    c.Date = date;
+                    c.Date = DateOnly.FromDateTime(date);
                     return c;
                 });
         }

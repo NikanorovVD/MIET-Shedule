@@ -2,7 +2,7 @@
 {
     public class CoupleDto
     {
-        public DateTime Date { get; set; }
+        public DateOnly Date { get; set; }
         public int Order { get; set; }
         public string Name { get; set; }
         public string Auditorium { get; set; }

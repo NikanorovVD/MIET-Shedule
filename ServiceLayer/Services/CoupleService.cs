@@ -43,7 +43,7 @@ namespace ServiceLayer.Services
                     .Select(c => new GrouppedCoupleDto()
                     {
                         Auditorium = c.Select(c => c.Auditorium).Distinct(),
-                        Date = date,
+                        Date = DateOnly.FromDateTime( date),
                         Group = c.Select(c => c.Group).Distinct(),
                         Name = c.First().Name,
                         Order = c.First().Order,

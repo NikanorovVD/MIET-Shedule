@@ -2,7 +2,7 @@
 {
     public class GrouppedCoupleDto
     {
-        public DateTime Date { get; set; }
+        public DateOnly Date { get; set; }
         public int Order { get; set; }
         public string Name { get; set; }
         public string Teacher { get; set; }
