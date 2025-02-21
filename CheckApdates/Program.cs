@@ -2,6 +2,9 @@
 using DataLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using NLog;
+using NLog.Extensions.Logging;
 using ServiceLayer.Services.Parsing;
 
 
@@ -23,11 +26,13 @@ namespace CheckApdates
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
             optionsBuilder.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
 
-            string resultPath = Path.Combine(basePath, "check_apdates_out.txt");
+            using ILoggerFactory factory = LoggerFactory.Create(builder => builder.AddNLog());
+            ILogger<CheckApdatesService> logger = factory.CreateLogger<CheckApdatesService>();
+
             MietSheduleAdapterService adapterService = new();
             SheduleParserService parserService = new(new HttpClient(), adapterService);
             AppDbContext dbContext = new(optionsBuilder.Options);
-            CheckApdatesService checkApdatesService = new(dbContext, resultPath);
+            CheckApdatesService checkApdatesService = new(dbContext, logger);
             SheduleInitializerService initializerService = new(adapterService, parserService, dbContext);
 
             while (true)
@@ -39,12 +44,12 @@ namespace CheckApdates
                     if (needApdate)
                     {
                         await initializerService.CreateSheduleAsync(couples);
-                        Console.WriteLine("Apdate done");
+                        logger.LogInformation("Apdate done");
                     }
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e);
+                    logger.LogCritical(e.ToString());
                 }
                 await Task.Delay(new TimeSpan(0, 1, 0));
             }

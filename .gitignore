@@ -393,5 +393,3 @@ FodyWeavers.xsd
 *.sln.iml
 
 MietShedule.Server/appsettings.Development.json
-
-check_apdates_out.txt

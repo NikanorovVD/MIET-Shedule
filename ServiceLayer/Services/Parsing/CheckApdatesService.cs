@@ -9,9 +9,9 @@ namespace ServiceLayer.Services.Parsing
     public class CheckApdatesService
     {
         private readonly AppDbContext dbContext;
-        private readonly ILogger<CheckApdatesService> _logger;
+        private readonly ILogger _logger;
 
-        public CheckApdatesService(AppDbContext dbContext, ILogger<CheckApdatesService> logger)
+        public CheckApdatesService(AppDbContext dbContext, ILogger logger)
         {
             this.dbContext = dbContext;
             _logger = logger;
