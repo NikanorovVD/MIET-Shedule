@@ -32,20 +32,20 @@ namespace ServiceLayer.Services
             return couples.WithDate(date);
         }
 
-        public IEnumerable<CoupleDto> GetTeacherCouples(string teacher, DateTime startDate, DateTime endDate)
+        public IEnumerable<GrouppedCoupleDto> GetTeacherCouples(string teacher, DateTime startDate, DateTime endDate)
         {
             var dates = DatesBetween(startDate, endDate);
             return dates.SelectMany(date =>
                 _appDbContext.Couples
                     .Where(c => EF.Functions.Like(c.NormalizedTeacher, $"%{teacher.ToUpper()}%"))
                     .Where(_dateFilterService.DateFilter(date))
-                    .GroupBy(c => c.Order)
-                    .Select(c => new CoupleDto()
+                    .GroupBy(c => new {c.Name, c.NormalizedTeacher, c.Order })
+                    .Select(c => new GrouppedCoupleDto()
                     {
-                        Auditorium = string.Join(", ", c.Select(c => c.Auditorium).Distinct()),
+                        Auditorium = c.Select(c => c.Auditorium).Distinct(),
                         Date = date,
-                        Group = string.Join(", ", c.Select(c => c.Group).Distinct()),
-                        Name = string.Join(", ", c.Select(c => c.Name).Distinct()),
+                        Group = c.Select(c => c.Group).Distinct(),
+                        Name = c.First().Name,
                         Order = c.First().Order,
                         Teacher = c.First().Teacher,
                         Time = CoupleTime.GetTime(c.First().Order),
@@ -53,7 +53,6 @@ namespace ServiceLayer.Services
             )
             .OrderBy(c => c.Date)
             .ThenBy(c => c.Order); 
-
         }
 
         private IEnumerable<DateTime> DatesBetween(DateTime startDate, DateTime endDate)

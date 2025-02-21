@@ -25,7 +25,7 @@ namespace MietShedule.Server.Controllers
         }
 
         [HttpGet("teacher/{teacher}")]
-        public async Task<IEnumerable<CoupleDto>> GetGroupShedule(string teacher, string startDate, string endDate)
+        public async Task<IEnumerable<GrouppedCoupleDto>> GetTeacherShedule(string teacher, string startDate, string endDate)
         {
             DateTime startDateParsed = DateTime.ParseExact(startDate, DateFormat.Format, CultureInfo.InvariantCulture);
             DateTime endDateParsed = DateTime.ParseExact(endDate, DateFormat.Format, CultureInfo.InvariantCulture);

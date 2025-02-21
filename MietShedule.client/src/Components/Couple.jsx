@@ -12,9 +12,9 @@ export default function Couple({ order, name, teacher, time, auditorium, date, g
                     <td className="date">{`${day}.${month}`}</td>
                     <td rowSpan={2} className="name">{name}
                         <div>
-                            <p className="group">{group}</p>
+                            <p className="group">{group.join(", ")}</p>
                             <p className="teacher">{teacher}</p>
-                            <p className="auditorium">{auditorium}</p>
+                            <p className="auditorium">{auditorium.join(", ")}</p>
                             <p className="time">{time}</p>
                         </div>
                     </td>
