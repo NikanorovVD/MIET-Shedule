@@ -78,13 +78,18 @@ export default function TeacherSection() {
                         </input>
                     </div>
                 </>
-            }          
+            }
 
 
             {shedule != undefined &&
                 shedule.map(c =>
                     <Couple key={keyExtractor(c)} {...c}></Couple>
                 )
+            }
+
+            {
+                shedule != undefined && shedule.length == 0 &&
+                <h2>Нет занятий</h2>
             }
 
         </section>

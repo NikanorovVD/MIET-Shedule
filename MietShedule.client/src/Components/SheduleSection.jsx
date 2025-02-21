@@ -39,7 +39,6 @@ export default function SheduleSection() {
 
     useEffect(() => {
         console.log(`effect date=${(new Date(date)).toLocaleDateString("en-GB")} group=${group}`)
-        //console.log(`check in ${groupsList}`)
         if (groupsList != undefined && groupsList.includes(group)) {
             console.log("fetch shedule")
             fetchShedule()
@@ -75,6 +74,11 @@ export default function SheduleSection() {
                 shedule.map(c =>
                     <SheduleCouple key={c.order} {...c}></SheduleCouple>
                 )
+            }
+
+            {
+                shedule != undefined && shedule.length == 0 &&
+                <h2>Нет занятий</h2>
             }
 
         </section>
