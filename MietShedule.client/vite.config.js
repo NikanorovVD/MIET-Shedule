@@ -54,7 +54,7 @@ export default defineConfig({
                 target: 'https://localhost:7056/',
                 secure: false
             },
-            '^/Teacher':{
+            '^/Teachers':{
                 target: 'https://localhost:7056/',
                 secure: false
             }

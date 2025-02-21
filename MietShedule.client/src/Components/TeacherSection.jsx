@@ -15,7 +15,7 @@ export default function TeacherSection() {
     const [endDate, setEndDate] = useState(endDateDefault.toISOString().split('T')[0])
 
     const fetchTeacherList = useCallback(async () => {
-        const teacherListResponse = await fetch("Teacher")
+        const teacherListResponse = await fetch("Teachers")
         if (teacherListResponse.status == 200) {
             const teachers = await teacherListResponse.json()
             setTeacherList(teachers)

@@ -8,6 +8,8 @@
     <SpaRoot>..\MietShedule.client</SpaRoot>
     <SpaProxyLaunchCommand>npm run dev</SpaProxyLaunchCommand>
     <SpaProxyServerUrl>https://localhost:5173</SpaProxyServerUrl>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile>C:\Projects\MIET-Shedule-v2\MietShedule.Server\SheduleAPI.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,6 +34,12 @@
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="Validation\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="SheduleAPI.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

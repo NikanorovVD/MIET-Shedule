@@ -1,5 +1,6 @@
 ﻿using DataLayer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using MietShedule.Server.Automapper;
 using ServiceLayer.Services;
@@ -19,6 +20,10 @@ namespace MietShedule.Server
                     Title = "Miet Shedule API",
                     Description = "API для работы с расписанием НИУ МИЭТ",
                 });
+
+                var basePath = AppContext.BaseDirectory;
+                var xmlPath = Path.Combine(basePath, "SheduleAPI.xml");
+                opt.IncludeXmlComments(xmlPath);
             });
         }
 

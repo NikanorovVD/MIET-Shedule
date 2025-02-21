@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MietShedule.Server</name>
+    </assembly>
+    <members>
+        <member name="M:MietShedule.Server.Controllers.GroupsController.AllGroups">
+            <summary>
+            Получение списка всех групп МИЭТ
+            </summary>
+            <returns>Список всех групп</returns>
+        </member>
+        <member name="M:MietShedule.Server.Controllers.SheduleController.GetGroupShedule(System.String,System.String)">
+            <summary>
+            Расписание группы на день
+            </summary>
+            <param name="group">Учебная группа в верхнем регистре</param>
+            <param name="dateString">Дата в формате dd/mm/yyyy</param>
+            <returns>Список пар</returns>
+        </member>
+        <member name="M:MietShedule.Server.Controllers.SheduleController.GetTeacherShedule(System.String,System.String,System.String)">
+            <summary>
+            Поиск пар преподавателя в заданные период
+            </summary>
+            <param name="teacher">строка поиска: поиск по вхождению в полное ФИО без учета регистра</param>
+            <param name="startDate">начальная дата периода в формате dd/mm/yyyy (включается в период)</param>
+            <param name="endDate">конечная дата периода в формате dd/mm/yyyy (включается в период)</param>
+            <returns>Список пар</returns>
+        </member>
+        <member name="M:MietShedule.Server.Controllers.TeachersController.AllGroups">
+            <summary>
+            Получение списка ФИО всех преподавателей МИЭТ
+            </summary>
+            <returns>Полные ФИО всех преподавателей</returns>
+        </member>
+    </members>
+</doc>

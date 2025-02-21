@@ -17,6 +17,12 @@ namespace MietShedule.Server.Controllers
             _coupleService = coupleService;
         }
 
+        /// <summary>
+        /// Расписание группы на день
+        /// </summary>
+        /// <param name="group">Учебная группа в верхнем регистре</param>
+        /// <param name="dateString">Дата в формате dd/mm/yyyy</param>
+        /// <returns>Список пар</returns>
         [HttpGet("{group}")]
         public async Task<IEnumerable<CoupleDto>> GetGroupShedule(string group, string dateString)
         {
@@ -24,6 +30,13 @@ namespace MietShedule.Server.Controllers
             return await _coupleService.GetGroupCouplesAsync(group, date);
         }
 
+        /// <summary>
+        /// Поиск пар преподавателя в заданные период
+        /// </summary>
+        /// <param name="teacher">строка поиска: поиск по вхождению в полное ФИО без учета регистра</param>
+        /// <param name="startDate">начальная дата периода в формате dd/mm/yyyy (включается в период)</param>
+        /// <param name="endDate">конечная дата периода в формате dd/mm/yyyy (включается в период)</param>
+        /// <returns>Список пар</returns>
         [HttpGet("teacher/{teacher}")]
         public async Task<IEnumerable<GrouppedCoupleDto>> GetTeacherShedule(string teacher, string startDate, string endDate)
         {

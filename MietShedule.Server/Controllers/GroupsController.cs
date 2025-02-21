@@ -14,6 +14,10 @@ namespace MietShedule.Server.Controllers
             _groupService = groupService;
         }
 
+        /// <summary>
+        /// Получение списка всех групп МИЭТ
+        /// </summary>
+        /// <returns>Список всех групп</returns>
         [HttpGet]
         public IEnumerable<string> AllGroups()
         {
