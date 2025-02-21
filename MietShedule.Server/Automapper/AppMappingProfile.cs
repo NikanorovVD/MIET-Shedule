@@ -15,6 +15,9 @@ namespace MietShedule.Server.Automapper
             // Data - Service
             CreateMap<Couple, CoupleDto>()
                 .ForMember(dest => dest.Time, opt => opt.MapFrom(src => CoupleTime.GetTime(src.Order)));
+
+            CreateMap<Couple, ExportCoupleDto>()
+                .ForMember(dest => dest.WeekType, opt => opt.MapFrom(src => src.WeekType.ToString()));
         }
     }
 }

@@ -33,7 +33,7 @@ namespace MietShedule.Server.Controllers
         }
 
         /// <summary>
-        /// Поиск пар преподавателя в заданные период
+        /// Поиск пар преподавателя в заданный период
         /// </summary>
         /// <param name="teacher">строка поиска: поиск по вхождению в полное ФИО без учета регистра</param>
         /// <param name="startDate">начальная дата периода в формате dd/mm/yyyy (включается в период)</param>

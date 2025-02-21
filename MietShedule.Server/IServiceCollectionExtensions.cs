@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using MietShedule.Server.Automapper;
 using ServiceLayer.Services;
+using ServiceLayer.Services.Parsing;
 
 namespace MietShedule.Server
 {
@@ -33,6 +34,8 @@ namespace MietShedule.Server
             services.AddScoped<DateFilterService>();
             services.AddScoped<GroupService>();
             services.AddScoped<TeacherService>();
+            services.AddScoped<SheduleParserService>();
+            services.AddScoped<MietSheduleAdapterService>();
         }
 
         public static void AddAppValidation(this IServiceCollection services)

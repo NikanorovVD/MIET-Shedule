@@ -4,6 +4,18 @@
         <name>MietShedule.Server</name>
     </assembly>
     <members>
+        <member name="M:MietShedule.Server.Controllers.ExportController.GetAdaptedData">
+            <summary>
+            Скачать расписание в адаптированном формате
+            </summary>
+            <returns>Файл с адаптированным расписанием в формате json</returns>
+        </member>
+        <member name="M:MietShedule.Server.Controllers.ExportController.GetOriginData">
+            <summary>
+            Скачать расписание в исходном формате MIET-API
+            </summary>
+            <returns>Файл с исходным расписанием в формате json</returns>
+        </member>
         <member name="M:MietShedule.Server.Controllers.GroupsController.AllGroups">
             <summary>
             Получение списка всех групп МИЭТ
@@ -21,7 +33,7 @@
         </member>
         <member name="M:MietShedule.Server.Controllers.SheduleController.GetTeacherShedule(System.String,System.String,System.String)">
             <summary>
-            Поиск пар преподавателя в заданные период
+            Поиск пар преподавателя в заданный период
             </summary>
             <param name="teacher">строка поиска: поиск по вхождению в полное ФИО без учета регистра</param>
             <param name="startDate">начальная дата периода в формате dd/mm/yyyy (включается в период)</param>

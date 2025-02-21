@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using DataLayer;
+using DataLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 using ServiceLayer.Constants;
 using ServiceLayer.Models;
@@ -57,6 +58,11 @@ namespace ServiceLayer.Services
             )
             .OrderBy(c => c.Date)
             .ThenBy(c => c.Order);
+        }
+
+        public  IEnumerable<ExportCoupleDto> GetAllExportCouples()
+        {
+            return _appDbContext.Couples.Select(c => _mapper.Map<ExportCoupleDto>(c));
         }
 
         private IEnumerable<DateTime> DatesBetween(DateTime startDate, DateTime endDate)
