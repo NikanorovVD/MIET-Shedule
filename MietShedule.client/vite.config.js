@@ -57,7 +57,12 @@ export default defineConfig({
             '^/Teachers':{
                 target: 'https://localhost:7056/',
                 secure: false
-            }
+            },
+            '^/Export':{
+                target: 'https://localhost:7056/',
+                secure: false
+            },
+            
         },
         port: 5173,
         https: {

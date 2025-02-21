@@ -1,9 +1,9 @@
 import './App.css';
-import Header from './Components/Header';
 import { useState } from 'react';
 import SheduleSection from './Components/SheduleSection';
 import TabSection from './Components/TabSection';
 import TeacherSection from './Components/TeacherSection';
+import ExportSection from './Components/ExportSection';
 
 function App() {
     const [tab, setTab] = useState('shedule')
@@ -16,6 +16,9 @@ function App() {
                 )}
                 {tab == 'teacher' && (
                     <TeacherSection />
+                )}
+                {tab == 'export' && (
+                    <ExportSection />
                 )}
             </main>
         </>
