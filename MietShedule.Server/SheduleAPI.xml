@@ -10,12 +10,13 @@
             </summary>
             <returns>Список всех групп</returns>
         </member>
-        <member name="M:MietShedule.Server.Controllers.SheduleController.GetGroupShedule(System.String,System.String)">
+        <member name="M:MietShedule.Server.Controllers.SheduleController.GetGroupShedule(System.String,System.String,System.String)">
             <summary>
             Расписание группы на день
             </summary>
             <param name="group">Учебная группа в верхнем регистре</param>
             <param name="dateString">Дата в формате dd/mm/yyyy</param>
+            <param name="ignored">Названия предметов которые не будут показаны: через запятую, без учета регистра</param>
             <returns>Список пар</returns>
         </member>
         <member name="M:MietShedule.Server.Controllers.SheduleController.GetTeacherShedule(System.String,System.String,System.String)">

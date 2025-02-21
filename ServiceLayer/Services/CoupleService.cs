@@ -21,11 +21,15 @@ namespace ServiceLayer.Services
             _dateFilterService = dateFilterService;
         }
 
-        public async Task<IEnumerable<CoupleDto>> GetGroupCouplesAsync(string group, DateTime date)
+        public async Task<IEnumerable<CoupleDto>> GetGroupCouplesAsync(string group, DateTime date, IEnumerable<string>? ignored = null)
         {
+            ignored ??= [];
+            var ignoredUpper = ignored.Select(x => x.ToUpper());
+
             var couples = await _appDbContext.Couples
                 .Where(c => c.Group == group)
                 .Where(_dateFilterService.DateFilter(date))
+                .Where(c => !ignoredUpper.Contains(c.Name.ToUpper()))
                 .OrderBy(c => c.Order)
                 .ProjectTo<CoupleDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
@@ -39,11 +43,11 @@ namespace ServiceLayer.Services
                 _appDbContext.Couples
                     .Where(c => EF.Functions.Like(c.NormalizedTeacher, $"%{teacher.ToUpper()}%"))
                     .Where(_dateFilterService.DateFilter(date))
-                    .GroupBy(c => new {c.Name, c.NormalizedTeacher, c.Order })
+                    .GroupBy(c => new { c.Name, c.NormalizedTeacher, c.Order })
                     .Select(c => new GrouppedCoupleDto()
                     {
                         Auditorium = c.Select(c => c.Auditorium).Distinct(),
-                        Date = DateOnly.FromDateTime( date),
+                        Date = DateOnly.FromDateTime(date),
                         Group = c.Select(c => c.Group).Distinct(),
                         Name = c.First().Name,
                         Order = c.First().Order,
@@ -52,7 +56,7 @@ namespace ServiceLayer.Services
                     })
             )
             .OrderBy(c => c.Date)
-            .ThenBy(c => c.Order); 
+            .ThenBy(c => c.Order);
         }
 
         private IEnumerable<DateTime> DatesBetween(DateTime startDate, DateTime endDate)
