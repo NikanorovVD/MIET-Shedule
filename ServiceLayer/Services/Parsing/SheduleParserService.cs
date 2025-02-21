@@ -1,4 +1,5 @@
 ﻿using DataLayer.Entities;
+using Microsoft.Extensions.Logging;
 using ServiceLayer.Constants;
 using ServiceLayer.Extensions;
 using ServiceLayer.Models.Exceptions;
@@ -11,25 +12,33 @@ namespace ServiceLayer.Services.Parsing
     {
         private readonly HttpClient _httpClient;
         private readonly MietSheduleAdapterService _adapterService;
+        private readonly ILogger<SheduleParserService> _logger;
+
         const string _sheduleUrl = @"https://www.miet.ru/schedule/data";
         const string _groupsUrl = @"https://www.miet.ru/schedule/groups";
 
-        public SheduleParserService(HttpClient httpClient, MietSheduleAdapterService adapterService)
+        public SheduleParserService(HttpClient httpClient, MietSheduleAdapterService adapterService, ILogger<SheduleParserService> logger)
         {
             _httpClient = httpClient;
             _adapterService = adapterService;
+            _logger = logger;
         }
 
         public async Task<IEnumerable<Couple>> GetAdaptedCouplesAsync()
         {
             var mietCouples = await GetMietCouplesAsync();
-            return mietCouples.Select(c => _adapterService.Adapt(c));
+            var adaptedCouples = mietCouples.Select(c => _adapterService.Adapt(c));
+
+            _logger.LogInformation("Adapted {AdaptedCount} couples", adaptedCouples.Count());
+            return adaptedCouples;
         }
 
         public async Task<IEnumerable<MietCouple>> GetMietCouplesAsync()
         {
             IEnumerable<string> groups = await GetMietGroupsAsync();
             IEnumerable<MietCouple> couples = await groups.SelectManyAsync(g => GetGroupSheduleAsync(g));
+
+            _logger.LogInformation("Parsed {ParsedCount} couples", couples.Count());
             return couples;
         }
 
@@ -71,6 +80,7 @@ namespace ServiceLayer.Services.Parsing
             try 
             {
                 IEnumerable<string> groups = (await JsonSerializer.DeserializeAsync<IEnumerable<string>>(response.Content.ReadAsStream()))!;
+                _logger.LogInformation("Parsed {ParsedCount} groups", groups.Count());
                 return groups;
             }
             catch (Exception ex)

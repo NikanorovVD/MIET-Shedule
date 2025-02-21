@@ -3,7 +3,6 @@ using DataLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using NLog;
 using NLog.Extensions.Logging;
 using ServiceLayer.Services.Parsing;
 
@@ -27,12 +26,14 @@ namespace CheckApdates
             optionsBuilder.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
 
             using ILoggerFactory factory = LoggerFactory.Create(builder => builder.AddNLog());
-            ILogger<CheckApdatesService> logger = factory.CreateLogger<CheckApdatesService>();
+            ILogger<CheckApdatesService> adapterLogger = factory.CreateLogger<CheckApdatesService>();
+            ILogger<SheduleParserService> parserLogger = factory.CreateLogger<SheduleParserService>();
+            ILogger<Program> programLogger = factory.CreateLogger<Program>();
 
             MietSheduleAdapterService adapterService = new();
-            SheduleParserService parserService = new(new HttpClient(), adapterService);
+            SheduleParserService parserService = new(new HttpClient(), adapterService, parserLogger);
             AppDbContext dbContext = new(optionsBuilder.Options);
-            CheckApdatesService checkApdatesService = new(dbContext, logger);
+            CheckApdatesService checkApdatesService = new(dbContext, adapterLogger);
             SheduleInitializerService initializerService = new(adapterService, parserService, dbContext);
 
             while (true)
@@ -44,12 +45,12 @@ namespace CheckApdates
                     if (needApdate)
                     {
                         await initializerService.CreateSheduleAsync(couples);
-                        logger.LogInformation("Apdate done");
+                        programLogger.LogInformation("Apdate done");
                     }
                 }
                 catch (Exception e)
                 {
-                    logger.LogCritical(e.ToString());
+                    programLogger.LogCritical(e.ToString());
                 }
                 await Task.Delay(new TimeSpan(0, 1, 0));
             }
