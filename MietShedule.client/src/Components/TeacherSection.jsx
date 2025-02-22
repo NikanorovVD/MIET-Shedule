@@ -1,6 +1,8 @@
 import Couple from "./Couple";
 import "./TeacherSection.css"
 import { useCallback, useEffect, useState } from "react";
+import useDate from "../hooks/useDate";
+import DatePicker from "./Button/DatePicker";
 
 
 export default function TeacherSection() {
@@ -11,8 +13,10 @@ export default function TeacherSection() {
     const [shedule, setShedule] = useState()
     const [teacher, setTeacher] = useState('')
     const [teacherList, setTeacherList] = useState()
-    const [startDate, setStartDate] = useState((new Date()).toISOString().split('T')[0])
-    const [endDate, setEndDate] = useState(endDateDefault.toISOString().split('T')[0])
+    //const { startDate, setStartDate, minusStartDay, addStartDay } = useDate()
+    //const { endDate, setEndDate, minusEndDay, addEndDay } = useDate()
+    const startDate = useDate()
+    const endDate = useDate(endDateDefault)
     const [invalidTeacher, setInvalidTeacher] = useState(false)
 
     const fetchTeacherList = useCallback(async () => {
@@ -25,8 +29,8 @@ export default function TeacherSection() {
 
     const fetchShedule = useCallback(async () => {
         if (teacher.length != 0) {
-            const formattedStartDate = new Date(startDate).toLocaleDateString("en-GB")
-            const formattedEndDate = new Date(endDate).toLocaleDateString("en-GB")
+            const formattedStartDate = new Date(startDate.value).toLocaleDateString("en-GB")
+            const formattedEndDate = new Date(endDate.value).toLocaleDateString("en-GB")
             const sheduleResponse = await fetch(`Shedule/teacher/${teacher}?startDate=${formattedStartDate}&endDate=${formattedEndDate}`)
 
             if (sheduleResponse.status == 200) {
@@ -34,7 +38,7 @@ export default function TeacherSection() {
                 setShedule(sheduleRecords)
             }
         }
-    }, [teacher, startDate, endDate])
+    }, [teacher, startDate.value, endDate.value])
 
     useEffect(() => {
         fetchTeacherList()
@@ -51,7 +55,7 @@ export default function TeacherSection() {
                 setInvalidTeacher(true)
             }
         }
-    }, [teacher, startDate, endDate, teacherList])
+    }, [teacher, startDate.value, endDate.value, teacherList])
 
     function keyExtractor(couple) {
         return `${couple.name}-${couple.date}-${couple.teacher}-${couple.order}-${couple.auditorium}-${couple.group}`;
@@ -67,21 +71,10 @@ export default function TeacherSection() {
                     <datalist id="teachers">
                         {teacherList.map(g => <option key={g}>{g}</option>)}
                     </datalist>
-                    <div>
-                        <input type="date"
-                            value={startDate}
-                            onChange={(event) => setStartDate(event.target.value)}>
-                        </input>
-                    </div>
-                    <div>
-                        <input type="date"
-                            value={endDate}
-                            onChange={(event) => setEndDate(event.target.value)}>
-                        </input>
-                    </div>
+                    <DatePicker {...startDate} />
+                    <DatePicker {...endDate} />
                 </>
             }
-
 
             {shedule != undefined &&
                 shedule.map(c =>

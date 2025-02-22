@@ -15,7 +15,7 @@ export default function SheduleSection() {
     const [group, setGroup] = useState(defaultGroup)
     const [groupsList, setGroupsList] = useState()
     const [shedule, setShedule] = useState()
-    const { date, setDate, minusDay, addDay } = useDate()
+    const date = useDate()
     const [ignored, setIgnored] = useState(defaultIgnored)
     const [invalidGroup, setInvalidGroup] = useState(false)
 
@@ -29,7 +29,7 @@ export default function SheduleSection() {
 
     const fetchShedule = useCallback(async () => {
         if (group.length != 0) {
-            let query = `Shedule/${group}?dateString=${(new Date(date)).toLocaleDateString("en-GB")}`
+            let query = `Shedule/${group}?dateString=${(new Date(date.value)).toLocaleDateString("en-GB")}`
             if (ignored.length != 0) query += `&ignored=${ignored}`
             const sheduleResponse = await fetch(query)
             if (sheduleResponse.status == 200) {
@@ -37,7 +37,7 @@ export default function SheduleSection() {
                 setShedule(sheduleRecords)
             }
         }
-    }, [group, date, ignored])
+    }, [group, date.value, ignored])
 
     useEffect(() => {
         fetchGroupsList()
@@ -54,7 +54,7 @@ export default function SheduleSection() {
                 setInvalidGroup(true)
             }
         }
-    }, [group, date, groupsList, ignored])
+    }, [group, date.value, groupsList, ignored])
 
     function keyExtractor(couple) {
         return `${couple.name}-${couple.date}-${couple.teacher}-${couple.order}-${couple.auditorium}-${couple.group}`;
@@ -70,7 +70,7 @@ export default function SheduleSection() {
                             {groupsList.map(g => <option key={g}>{g}</option>)}
                         </datalist>
                     </div>
-                    <DatePicker date={date} minusDay={() => minusDay()} addDay={() => addDay()} setDate={setDate} />
+                    <DatePicker {...date} />
                 </>
 
             }
