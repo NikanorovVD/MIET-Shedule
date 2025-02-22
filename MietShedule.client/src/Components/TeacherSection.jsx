@@ -13,6 +13,7 @@ export default function TeacherSection() {
     const [teacherList, setTeacherList] = useState()
     const [startDate, setStartDate] = useState((new Date()).toISOString().split('T')[0])
     const [endDate, setEndDate] = useState(endDateDefault.toISOString().split('T')[0])
+    const [invalidTeacher, setInvalidTeacher] = useState(false)
 
     const fetchTeacherList = useCallback(async () => {
         const teacherListResponse = await fetch("Teachers")
@@ -28,8 +29,6 @@ export default function TeacherSection() {
             const formattedEndDate = new Date(endDate).toLocaleDateString("en-GB")
             const sheduleResponse = await fetch(`Shedule/teacher/${teacher}?startDate=${formattedStartDate}&endDate=${formattedEndDate}`)
 
-            console.log('fetch shedule')
-            console.log(sheduleResponse)
             if (sheduleResponse.status == 200) {
                 const sheduleRecords = await sheduleResponse.json()
                 setShedule(sheduleRecords)
@@ -38,16 +37,19 @@ export default function TeacherSection() {
     }, [teacher, startDate, endDate])
 
     useEffect(() => {
-        console.log("fetch teacher list")
         fetchTeacherList()
     }, [])
 
     useEffect(() => {
         if (teacherList != undefined && teacherList.includes(teacher)) {
             fetchShedule()
+            setInvalidTeacher(false)
         }
         else {
             setShedule(undefined)
+            if (teacher.length != 0) {
+                setInvalidTeacher(true)
+            }
         }
     }, [teacher, startDate, endDate, teacherList])
 
@@ -60,7 +62,7 @@ export default function TeacherSection() {
             {teacherList != undefined &&
                 <>
                     <div>
-                        <input id="teacher_input" type="text" list="teachers" value={teacher} onChange={(event) => setTeacher(event.target.value)} />
+                        <input className={invalidTeacher ? "error-input" : ""} id="teacher_input" type="text" list="teachers" value={teacher} onChange={(event) => setTeacher(event.target.value)} />
                     </div>
                     <datalist id="teachers">
                         {teacherList.map(g => <option key={g}>{g}</option>)}

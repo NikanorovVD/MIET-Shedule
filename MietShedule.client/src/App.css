@@ -22,3 +22,9 @@ th, td {
     display: grid;
     place-items: center;
 }
+
+.error-input {
+    border: 1px solid red; 
+    box-shadow: 0 0 5px rgba(255, 0, 0, 0.7); 
+    transition: all 0.3s ease-in-out; 
+  }

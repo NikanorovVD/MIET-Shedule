@@ -7,9 +7,6 @@ export default function SheduleSection() {
 
     const url = new URL(window.location.href);
     const urlParams = new URLSearchParams(url.search)
-    for (let param of urlParams.entries()) {
-        console.log(`${param[0]}: ${param[1]}`);
-    }
     const defaultGroup = urlParams.get("group") ?? ""
     const defaultIgnored = urlParams.get("ignore") ?? ""
 
@@ -18,6 +15,7 @@ export default function SheduleSection() {
     const [shedule, setShedule] = useState()
     const [date, setDate] = useState((new Date()).toISOString().split('T')[0])
     const [ignored, setIgnored] = useState(defaultIgnored)
+    const [invalidGroup, setInvalidGroup] = useState(false)
 
     const fetchGroupsList = useCallback(async () => {
         const groupsListResponse = await fetch("Groups")
@@ -31,9 +29,7 @@ export default function SheduleSection() {
         if (group.length != 0) {
             let query = `Shedule/${group}?dateString=${(new Date(date)).toLocaleDateString("en-GB")}`
             if (ignored.length != 0) query += `&ignored=${ignored}`
-            console.log(ignored)
             const sheduleResponse = await fetch(query)
-            //console.log(sheduleResponse)
             if (sheduleResponse.status == 200) {
                 const sheduleRecords = await sheduleResponse.json()
                 setShedule(sheduleRecords)
@@ -42,19 +38,19 @@ export default function SheduleSection() {
     }, [group, date, ignored])
 
     useEffect(() => {
-        //console.log("fetch groups list")
         fetchGroupsList()
     }, [])
 
     useEffect(() => {
-        //console.log(`effect date=${(new Date(date)).toLocaleDateString("en-GB")} group=${group}`)
         if (groupsList != undefined && groupsList.includes(group)) {
-            //console.log("fetch shedule")
             fetchShedule()
+            setInvalidGroup(false)
         }
         else {
-            //console.log("clear shedule")
             setShedule(undefined)
+            if (group.length != 0) {
+                setInvalidGroup(true)
+            }
         }
     }, [group, date, groupsList, ignored])
 
@@ -67,7 +63,7 @@ export default function SheduleSection() {
             {groupsList != undefined &&
                 <>
                     <div>
-                        <input type="text" list="groups" value={group} onChange={(event) => setGroup(event.target.value)} />
+                        <input className={invalidGroup ? "error-input" : ""} type="text" list="groups" value={group} onChange={(event) => setGroup(event.target.value)} />
                         <datalist id="groups">
                             {groupsList.map(g => <option key={g}>{g}</option>)}
                         </datalist>
