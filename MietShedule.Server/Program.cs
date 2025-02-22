@@ -14,6 +14,7 @@ namespace TaskManager.Server
 
             builder.Services.AddAppAutoMapper();
             builder.Services.AddAppValidation();
+            builder.Services.AddAppLogging();
 
             builder.Services.AddAppOpenApi();
             builder.Services.AddAppSwagger();
@@ -25,7 +26,6 @@ namespace TaskManager.Server
             var app = builder.Build();
 
             app.UseDefaultFiles();
-            app.UseStaticFiles();
 
             app.MapOpenApi();
             app.MapAppScalarApi();
@@ -34,7 +34,6 @@ namespace TaskManager.Server
 
             app.UseHttpsRedirection();
             app.MapControllers();
-            app.MapFallbackToFile("/index.html");
             app.Run();
         }
     }

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using MietShedule.Server.Automapper;
+using NLog.Extensions.Logging;
 using ServiceLayer.Services;
 using ServiceLayer.Services.Parsing;
 
@@ -36,6 +37,15 @@ namespace MietShedule.Server
             services.AddScoped<TeacherService>();
             services.AddScoped<SheduleParserService>();
             services.AddScoped<MietSheduleAdapterService>();
+        }
+
+        public static void AddAppLogging(this IServiceCollection services)
+        {
+            services.AddLogging(loggingBuilder =>
+            {
+                loggingBuilder.ClearProviders();
+                loggingBuilder.AddNLog();
+            });
         }
 
         public static void AddAppValidation(this IServiceCollection services)
