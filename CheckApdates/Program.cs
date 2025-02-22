@@ -52,7 +52,7 @@ namespace CheckApdates
                 {
                     programLogger.LogCritical(e.ToString());
                 }
-                await Task.Delay(new TimeSpan(0, 1, 0));
+                await Task.Delay(new TimeSpan(24, 0, 0));
             }
         }
     }
