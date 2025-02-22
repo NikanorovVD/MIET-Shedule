@@ -1,7 +1,6 @@
 import "./DatePicker.css"
 
 export default function DatePicker({ date, minusDay, addDay, setDate, ...props }) {
-    console.log(date)
     return (
         <div className="datapicker-container" {...props}>
             <button className="triangle-buttons" onClick={() => minusDay()}>

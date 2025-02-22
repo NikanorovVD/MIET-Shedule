@@ -1,3 +1,4 @@
+import useDate from "../hooks/useDate";
 import DatePicker from "./Button/DatePicker";
 import SheduleCouple from "./SheduleCouple";
 import "./SheduleSection.css"
@@ -14,7 +15,7 @@ export default function SheduleSection() {
     const [group, setGroup] = useState(defaultGroup)
     const [groupsList, setGroupsList] = useState()
     const [shedule, setShedule] = useState()
-    const [date, setDate] = useState((new Date()).toISOString().split('T')[0])
+    const { date, setDate, minusDay, addDay } = useDate()
     const [ignored, setIgnored] = useState(defaultIgnored)
     const [invalidGroup, setInvalidGroup] = useState(false)
 
@@ -54,21 +55,6 @@ export default function SheduleSection() {
             }
         }
     }, [group, date, groupsList, ignored])
-
-    const addDay = useCallback(() => {
-        let newdate = new Date(date)
-        newdate.setDate(newdate.getDate() + 1)
-        console.log(newdate.toISOString().split('T')[0])
-        setDate(newdate.toISOString().split('T')[0])
-    }, [date])
-
-
-    const minusDay = useCallback(() => {
-        let newdate = new Date(date)
-        newdate.setDate(newdate.getDate() - 1)
-        console.log(newdate.toISOString().split('T')[0])
-        setDate(newdate.toISOString().split('T')[0])
-    }, [date])
 
     function keyExtractor(couple) {
         return `${couple.name}-${couple.date}-${couple.teacher}-${couple.order}-${couple.auditorium}-${couple.group}`;
