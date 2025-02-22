@@ -26,7 +26,7 @@
             <summary>
             Расписание группы на день
             </summary>
-            <param name="group">Учебная группа в верхнем регистре</param>
+            <param name="group">Учебная группа без учета регистра</param>
             <param name="dateString">Дата в формате dd/mm/yyyy</param>
             <param name="ignored">Названия предметов которые не будут показаны: через запятую, без учета регистра, поддерживает регулярные выражения</param>
             <returns>Список пар</returns>

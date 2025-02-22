@@ -20,16 +20,18 @@ namespace MietShedule.Server.Controllers
         /// <summary>
         /// Расписание группы на день
         /// </summary>
-        /// <param name="group">Учебная группа в верхнем регистре</param>
+        /// <param name="group">Учебная группа без учета регистра</param>
         /// <param name="dateString">Дата в формате dd/mm/yyyy</param>
         /// <param name="ignored">Названия предметов которые не будут показаны: через запятую, без учета регистра, поддерживает регулярные выражения</param>
         /// <returns>Список пар</returns>
         [HttpGet("{group}")]
         public async Task<IEnumerable<CoupleDto>> GetGroupShedule(string group, string dateString, string ignored = "")
         {
+            string groupUpper = group.ToUpper();
+
             IEnumerable<string> ignoredCouples = ignored.Split(',').Select(s => s.Trim());
             DateTime date = DateTime.ParseExact(dateString, DateFormat.Format, CultureInfo.InvariantCulture);
-            return await _coupleService.GetGroupCouplesAsync(group, date, ignoredCouples);
+            return await _coupleService.GetGroupCouplesAsync(groupUpper, date, ignoredCouples);
         }
 
         /// <summary>
