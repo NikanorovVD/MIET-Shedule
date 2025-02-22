@@ -1,8 +1,6 @@
 import './ExportSection.css'
 
 export default function ExportSection() {
-
-
     async function downloadFile(url, filename) {
         await fetch(url)
             .then(response => {
