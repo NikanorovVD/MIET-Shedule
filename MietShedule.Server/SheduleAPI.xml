@@ -28,7 +28,7 @@
             </summary>
             <param name="group">Учебная группа в верхнем регистре</param>
             <param name="dateString">Дата в формате dd/mm/yyyy</param>
-            <param name="ignored">Названия предметов которые не будут показаны: через запятую, без учета регистра</param>
+            <param name="ignored">Названия предметов которые не будут показаны: через запятую, без учета регистра, поддерживает регулярные выражения</param>
             <returns>Список пар</returns>
         </member>
         <member name="M:MietShedule.Server.Controllers.SheduleController.GetTeacherShedule(System.String,System.String,System.String)">

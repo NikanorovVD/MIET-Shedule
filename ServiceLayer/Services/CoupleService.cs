@@ -25,12 +25,11 @@ namespace ServiceLayer.Services
         public async Task<IEnumerable<CoupleDto>> GetGroupCouplesAsync(string group, DateTime date, IEnumerable<string>? ignored = null)
         {
             ignored ??= [];
-            var ignoredUpper = ignored.Select(x => x.ToUpper());
 
             var couples = await _appDbContext.Couples
                 .Where(c => c.Group == group)
                 .Where(_dateFilterService.DateFilter(date))
-                .Where(c => !ignoredUpper.Contains(c.Name.ToUpper()))
+                .Where(c => !ignored.Any(ign => EF.Functions.ILike(c.Name, ign)))
                 .OrderBy(c => c.Order)
                 .ProjectTo<CoupleDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();

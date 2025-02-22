@@ -22,7 +22,7 @@ namespace MietShedule.Server.Controllers
         /// </summary>
         /// <param name="group">Учебная группа в верхнем регистре</param>
         /// <param name="dateString">Дата в формате dd/mm/yyyy</param>
-        /// <param name="ignored">Названия предметов которые не будут показаны: через запятую, без учета регистра</param>
+        /// <param name="ignored">Названия предметов которые не будут показаны: через запятую, без учета регистра, поддерживает регулярные выражения</param>
         /// <returns>Список пар</returns>
         [HttpGet("{group}")]
         public async Task<IEnumerable<CoupleDto>> GetGroupShedule(string group, string dateString, string ignored = "")
