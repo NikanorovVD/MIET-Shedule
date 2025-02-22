@@ -68,6 +68,7 @@ export default defineConfig({
         https: {
             key: fs.readFileSync(keyFilePath),
             cert: fs.readFileSync(certFilePath),
-        }
+        },
+        host: '0.0.0.0'
     }
 })
