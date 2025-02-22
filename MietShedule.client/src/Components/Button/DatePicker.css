@@ -1,0 +1,76 @@
+.datapicker-container{
+    display: flex; /* Включаем Flexbox для контейнера */
+    gap: 10px; /* Задаем расстояние между элементами */
+    }
+
+.triangle-buttons {
+    /* Center the content */
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin: 8px 0;
+    /* Spacing */
+    padding: 0.5rem;
+}
+
+.triangle-buttons__triangle {
+    border-style: solid;
+
+    /* Size */
+    height: 0px;
+    width: 0px;
+
+}
+
+.triangle-buttons__triangle--t {
+    border-color: transparent transparent #d1d5db;
+    border-width: 0 0.5rem 0.5rem;
+}
+
+.triangle-buttons__triangle--r {
+    border-color: transparent transparent transparent #d1d5db;
+    border-width: 0.5rem 0 0.5rem 0.5rem;
+}
+
+.triangle-buttons__triangle--b {
+    border-color: #d1d5db transparent transparent;
+    border-width: 0.5rem 0.5rem 0;
+}
+
+.triangle-buttons__triangle--l {
+    border-color: transparent #d1d5db transparent transparent;
+    border-width: 0.5rem 0.5rem 0.5rem 0;
+}
+
+
+
+.triangle-button {
+    position: relative;
+    width: 160px; /* ширина кнопки */
+    height: 60px; /* высота кнопки */
+    background: linear-gradient(to right, #333, #555);
+    color: white;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  
+  .triangle-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 0;
+    height: 0;
+    border-left: 80px solid transparent; /* левая сторона треугольника */
+    border-right: 80px solid transparent; /* правая сторона треугольника */
+    border-bottom: 140px solid #333; /* основание треугольника */
+  }
+  
+  .triangle-button:hover::before {
+    border-bottom-color: #444; /* изменение цвета при наведении */
+  }

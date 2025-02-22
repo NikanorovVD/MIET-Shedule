@@ -1,3 +1,4 @@
+import DatePicker from "./Button/DatePicker";
 import SheduleCouple from "./SheduleCouple";
 import "./SheduleSection.css"
 import { useCallback, useEffect, useState } from "react";
@@ -54,6 +55,21 @@ export default function SheduleSection() {
         }
     }, [group, date, groupsList, ignored])
 
+    const addDay = useCallback(() => {
+        let newdate = new Date(date)
+        newdate.setDate(newdate.getDate() + 1)
+        console.log(newdate.toISOString().split('T')[0])
+        setDate(newdate.toISOString().split('T')[0])
+    }, [date])
+
+
+    const minusDay = useCallback(() => {
+        let newdate = new Date(date)
+        newdate.setDate(newdate.getDate() - 1)
+        console.log(newdate.toISOString().split('T')[0])
+        setDate(newdate.toISOString().split('T')[0])
+    }, [date])
+
     function keyExtractor(couple) {
         return `${couple.name}-${couple.date}-${couple.teacher}-${couple.order}-${couple.auditorium}-${couple.group}`;
     }
@@ -68,12 +84,7 @@ export default function SheduleSection() {
                             {groupsList.map(g => <option key={g}>{g}</option>)}
                         </datalist>
                     </div>
-                    <div>
-                        <input type="date"
-                            value={date}
-                            onChange={(event) => setDate(event.target.value)}>
-                        </input>
-                    </div>
+                    <DatePicker date={date} minusDay={() => minusDay()} addDay={() => addDay()} setDate={setDate} />
                 </>
 
             }
