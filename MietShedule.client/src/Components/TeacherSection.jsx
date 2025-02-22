@@ -56,7 +56,7 @@ export default function TeacherSection() {
     }
 
     return (
-        <section>
+        <section className="shedule_section">
             {teacherList != undefined &&
                 <>
                     <div>

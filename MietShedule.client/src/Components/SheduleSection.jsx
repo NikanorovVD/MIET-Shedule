@@ -63,7 +63,7 @@ export default function SheduleSection() {
     }
 
     return (
-        <section>
+        <section className="shedule_section">
             {groupsList != undefined &&
                 <>
                     <div>
@@ -93,8 +93,10 @@ export default function SheduleSection() {
                 <h2>Нет занятий</h2>
             }
 
-            <p>Ignore: {ignored}</p>
-
+            {
+                ignored.length != 0 &&
+                <p>Ignore: {ignored}</p>
+            }
         </section>
     )
 }

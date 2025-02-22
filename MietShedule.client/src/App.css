@@ -17,3 +17,8 @@ th, td {
     padding-left: 1rem;
     padding-right: 1rem;
 }
+
+.shedule_section{
+    display: grid;
+    place-items: center;
+}
