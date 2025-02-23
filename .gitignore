@@ -393,3 +393,4 @@ FodyWeavers.xsd
 *.sln.iml
 
 MietShedule.Server/appsettings.Development.json
+origin_shedule.json

@@ -14,7 +14,6 @@ namespace MietShedule.Server.Controllers
     public class ExportController : ControllerBase
     {
         private readonly CoupleService _coupleService;
-        private readonly SheduleParserService _parserService;
 
         private static readonly JsonSerializerOptions jsonOtions = new JsonSerializerOptions()
         {
@@ -22,10 +21,9 @@ namespace MietShedule.Server.Controllers
             WriteIndented = true
         };
 
-        public ExportController(CoupleService coupleService, SheduleParserService parserService)
+        public ExportController(CoupleService coupleService)
         {
             _coupleService = coupleService;
-            _parserService = parserService;
         }
 
         /// <summary>
@@ -49,12 +47,11 @@ namespace MietShedule.Server.Controllers
         /// </summary>
         /// <returns>Файл с исходным расписанием в формате json</returns>
         [HttpGet("Origin")]
-        public async Task<FileContentResult> GetOriginData()
+        public async Task<FileStreamResult> GetOriginData()
         {
-            IEnumerable<MietCouple> couples = await _parserService.GetMietCouplesAsync();
-            string json = JsonSerializer.Serialize(couples, jsonOtions);
-
-            return new FileContentResult(Encoding.UTF8.GetBytes(json), "application/octet-stream")
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "Data", "origin_shedule.json");
+            Stream stream = System.IO.File.OpenRead(path);
+            return new FileStreamResult(stream, "application/octet-stream")
             {
                 FileDownloadName = "MIET-Shedule-origin.json"
             };
