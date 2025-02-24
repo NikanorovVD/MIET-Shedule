@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 
 namespace ServiceLayer.Models.Exceptions
 {
@@ -17,7 +16,15 @@ namespace ServiceLayer.Models.Exceptions
         }
 
         public MietRequestException(string message, string url, HttpStatusCode statusCode, string body) 
-            : this(message, url, (int)statusCode, body) { }    
+            : this(message, url, (int)statusCode, body) { }
+
+        public override string ToString()
+        {
+            return $"ulr: {_url}{Environment.NewLine}" +
+                $"status code: {_statusCode}{Environment.NewLine}" +
+                $"content: {_body}{Environment.NewLine}" +
+                $"exception: {base.ToString()}";
+        }
     }
 
 }
