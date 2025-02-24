@@ -1,7 +1,6 @@
-using MietShedule.Server;
 using ServiceLayer.Services;
 
-namespace TaskManager.Server
+namespace MietShedule.Server
 {
     public class Program
     {
