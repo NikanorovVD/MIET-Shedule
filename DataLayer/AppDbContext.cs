@@ -1,4 +1,5 @@
-﻿using DataLayer.Entities;
+﻿using DataLayer.Configuration;
+using DataLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataLayer
@@ -18,6 +19,7 @@ namespace DataLayer
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.ApplyConfiguration(new PairConfiguration());
             base.OnModelCreating(builder);
         }
     }
