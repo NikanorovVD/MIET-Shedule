@@ -5,7 +5,9 @@ namespace DataLayer
 {
     public class AppDbContext : DbContext
     {
-        public DbSet<Couple> Couples { get; set; }
+        public DbSet<Pair> Pairs { get; set; }
+        public DbSet<Group> Groups { get; set; }
+        public DbSet<Teacher> Teachers { get; set; }
         public AppDbContext() : base() { }
         public AppDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions) { }
 
@@ -13,6 +15,7 @@ namespace DataLayer
         {
             optionsBuilder.UseNpgsql();
         }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

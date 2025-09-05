@@ -1,17 +1,20 @@
 ﻿namespace DataLayer.Entities
 {
-    public class Couple
+    public class Pair
     {
         public int Id {  get; set; }
         public int Order { get; set; }
         public int Day { get; set; }
         public string Name { get; set; }
         public string Auditorium { get; set; }
-        public string Teacher { get; set; }
-        public string NormalizedTeacher { get; set; }
-        public string Group { get; set; }
         public WeekType WeekType { get; set; }
+        public int TeacherId { get; set; }
+        public int GroupId { get; set; }
+
+        public Teacher Teacher { get; set; }
+        public Group Group { get; set; }
     }
+
     public enum WeekType
     {
         ПервыйЧислитель = 0,
