@@ -1,6 +1,6 @@
 ﻿namespace ServiceLayer.Models
 {
-    public class ExportCoupleDto
+    public class PairExportDto
     {
         public int Order { get; set; }
         public int Day { get; set; }

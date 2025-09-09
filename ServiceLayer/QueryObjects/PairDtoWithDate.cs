@@ -1,11 +1,10 @@
 ﻿using ServiceLayer.Models;
-using System.Linq;
 
 namespace ServiceLayer.QueryObjects
 {
-    public static class CoupleDtoWithDate
+    public static class PairDtoWithDate
     {
-        public static IEnumerable<CoupleDto> WithDate(this IEnumerable<CoupleDto> couples, DateTime date)
+        public static IEnumerable<PairDto> WithDate(this IEnumerable<PairDto> couples, DateTime date)
         {
             return couples.Select(c =>
                 {

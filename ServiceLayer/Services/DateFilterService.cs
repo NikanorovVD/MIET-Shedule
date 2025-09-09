@@ -1,7 +1,6 @@
 ﻿using DataLayer.Entities;
-using Microsoft.Extensions.Configuration;
-using ServiceLayer.Constants;
-using System.Globalization;
+using Microsoft.Extensions.Options;
+using ServiceLayer.Configuration;
 using System.Linq.Expressions;
 
 namespace ServiceLayer.Services
@@ -12,14 +11,14 @@ namespace ServiceLayer.Services
         private const int _daysInWeek = 7;
         private const int _weekTypesCount = 4;
 
-        public DateFilterService(IConfiguration configuration)
+        public DateFilterService(IOptions<SheduleSettings> options)
         {
-            _startDate = DateTime.ParseExact(configuration["StartDate"], DateFormat.Format, CultureInfo.InvariantCulture);
+            _startDate = options.Value.StartDate;
         }
 
-        public Expression<Func<Couple, bool>> DateFilter(DateTime date)
+        public Expression<Func<Pair, bool>> DateFilter(DateTime date)
         {
-            return (Couple c) => c.Day == DayOfWeek(date) && c.WeekType == GetWeekType(WeekNumber(date));
+            return c => c.Day == DayOfWeek(date) && c.WeekType == GetWeekType(WeekNumber(date));
         }
 
         private int DayOfWeek(DateTime date)

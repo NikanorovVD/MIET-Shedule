@@ -13,9 +13,8 @@ namespace ServiceLayer.Services
 
         public IEnumerable<string> GetAll()
         {
-            return _dbContext.Couples
-                .Select(c => c.Group)
-                .Distinct()
+            return _dbContext.Groups
+                .Select(c => c.Name)
                 .OrderBy(c => c);
         }
     }
