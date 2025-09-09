@@ -19,9 +19,9 @@ namespace MietShedule.Server.Controllers
         /// </summary>
         /// <returns>Полные ФИО всех преподавателей</returns>
         [HttpGet]
-        public IEnumerable<string> AllGroups()
+        public async Task<IEnumerable<string>> AllGroupsAsync(CancellationToken cancellationToken)
         {
-            return _teacherService.GetAll();
+            return await _teacherService.GetAllAsync(cancellationToken);
         }
     }
 }

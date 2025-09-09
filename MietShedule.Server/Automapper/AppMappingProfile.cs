@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using DataLayer.Entities;
-using ServiceLayer.Constants;
 using ServiceLayer.Models;
-
 
 namespace MietShedule.Server.Automapper
 {
@@ -10,14 +8,17 @@ namespace MietShedule.Server.Automapper
     {
         public AppMappingProfile()
         {
-            AllowNullCollections = true;
-
             // Data - Service
-            CreateMap<Couple, CoupleDto>()
-                .ForMember(dest => dest.Time, opt => opt.MapFrom(src => CoupleTime.GetTime(src.Order)));
+            CreateMap<Pair, PairDto>()
+                .ForMember(dest => dest.Group, opt => opt.MapFrom(src => src.Group.Name))
+                .ForMember(dest => dest.Teacher, opt => opt.MapFrom(src => src.Teacher.Name));
 
-            CreateMap<Couple, ExportCoupleDto>()
-                .ForMember(dest => dest.WeekType, opt => opt.MapFrom(src => src.WeekType.ToString()));
+            CreateMap<TimePair, TimeDto>();
+
+            CreateMap<Pair, PairExportDto>()
+                .ForMember(dest => dest.WeekType, opt => opt.MapFrom(src => src.WeekType.ToString()))
+                .ForMember(dest => dest.Group, opt => opt.MapFrom(src => src.Group.Name))
+                .ForMember(dest => dest.Teacher, opt => opt.MapFrom(src => src.Teacher.Name));
         }
     }
 }

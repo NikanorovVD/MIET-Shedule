@@ -1,3 +1,8 @@
+using DataLayer;
+using Microsoft.EntityFrameworkCore;
+using MietClient;
+using MietShedule.Server.Automapper;
+using ServiceLayer.Configuration;
 using ServiceLayer.Services;
 
 namespace MietShedule.Server
@@ -7,33 +12,37 @@ namespace MietShedule.Server
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            var services = builder.Services;
+            var configuration = builder.Configuration;
 
-            builder.Services.AddControllers();
-            builder.Services.AddAppServices();
+            services.Configure<MietClientSettings>(configuration.GetSection("MietClient"));
+            services.Configure<SheduleSettings>(configuration.GetSection("Shedule"));
+            services.Configure<FormatSettings>(configuration.GetSection("Format"));
 
-            builder.Services.AddAppAutoMapper();
-            builder.Services.AddAppValidation();
-            builder.Services.AddAppLogging();
+            services.AddControllers();
+            services.AddAppServices();
 
-            builder.Services.AddAppOpenApi();
-            builder.Services.AddAppSwagger();
+            services.AddAutoMapper(typeof(AppMappingProfile));
+            services.AddAppLogging();
 
-            builder.Services.AddAppDbContext(builder.Configuration);
-            builder.Services.AddHostedService<DatabaseInitService>();
-            builder.Services.AddHttpClient();
+            services.AddOpenApi();
+            services.AddAppSwagger();
+
+            services.AddDbContext<AppDbContext>(options
+                => options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddAppQuartz(configuration);
+            
+            services.AddHostedService<DatabaseInitService>();
+            services.AddHttpClient();
 
             var app = builder.Build();
 
-            app.UseDefaultFiles();
-
             app.MapOpenApi();
-            app.MapAppScalarApi();
             app.UseSwagger();
             app.UseSwaggerUI();
-
-            app.UseHttpsRedirection();
             app.MapControllers();
             app.Run();
         }
-    }
+    }    
 }

@@ -1,6 +1,0 @@
-@MietShedule.Server_HostAddress = http://localhost:5053
-
-GET {{MietShedule.Server_HostAddress}}/Groups/
-Accept: application/json
-
-###

@@ -19,9 +19,9 @@ namespace MietShedule.Server.Controllers
         /// </summary>
         /// <returns>Список всех групп</returns>
         [HttpGet]
-        public IEnumerable<string> AllGroups()
+        public async Task<IEnumerable<string>> GetAllGroupsAsync(CancellationToken cancellationToken)
         {
-            return _groupService.GetAll();
+            return await _groupService.GetAllAsync(cancellationToken);
         }
     }
 }

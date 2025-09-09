@@ -1,10 +1,8 @@
-﻿using DataLayer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
-using MietShedule.Server.Automapper;
+﻿using Microsoft.OpenApi.Models;
+using MietShedule.Server.QuartzJobs;
 using NLog.Extensions.Logging;
+using Quartz;
 using ServiceLayer.Services;
-using ServiceLayer.Services.Parsing;
 
 namespace MietShedule.Server
 {
@@ -30,12 +28,16 @@ namespace MietShedule.Server
 
         public static void AddAppServices(this IServiceCollection services)
         {
-            services.AddScoped<CoupleService>();
-            services.AddScoped<DateFilterService>();
+            services.AddScoped<PairService>();
             services.AddScoped<GroupService>();
             services.AddScoped<TeacherService>();
-            services.AddScoped<SheduleParserService>();
-            services.AddScoped<MietSheduleAdapterService>();
+
+            services.AddScoped<MietClientService>();
+            services.AddScoped<SheduleUpdateService>();
+
+            services.AddSingleton<MietSheduleAdapterService>();
+            services.AddSingleton<IgnoredFilterService>();
+            services.AddSingleton<DateFilterService>();
         }
 
         public static void AddAppLogging(this IServiceCollection services)
@@ -47,25 +49,33 @@ namespace MietShedule.Server
             });
         }
 
-        public static void AddAppValidation(this IServiceCollection services)
+        public static void AddAppQuartz(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddQuartz(q =>
+            {
+                var jobKey = new JobKey("SheduleUpdateJob");
+                q.AddJob<SheduleUpdateJob>(opts => opts.WithIdentity(jobKey));
 
-        }
+                bool parseOnStart = bool.Parse(configuration["ParseSheduleOnStart"]!);
+                string cronShedule = configuration["CronUpdateShedule"]!;
 
-        public static void AddAppOpenApi(this IServiceCollection services)
-        {
-            services.AddOpenApi();
-        }
+                if (parseOnStart)
+                {
+                    q.AddTrigger(opts => opts
+                        .ForJob(jobKey)
+                        .WithIdentity("SheduleUpdateJob-start-trigger")
+                        .StartNow()
+                    );
+                }
 
-        public static void AddAppAutoMapper(this IServiceCollection services)
-        {
-            services.AddAutoMapper(typeof(AppMappingProfile));
-        }
-
-        public static void AddAppDbContext(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.AddDbContext<AppDbContext>(options
-               => options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+                q.AddTrigger(opts => opts
+                    .ForJob(jobKey)
+                    .WithIdentity("SheduleUpdateJob-daily-trigger")
+                    .WithCronSchedule(cronShedule)
+                    .StartNow()
+                );
+            });
+            services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
         }
     }
 }

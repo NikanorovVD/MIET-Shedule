@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "DataLayer\Data
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceLayer", "ServiceLayer\ServiceLayer.csproj", "{87D859D2-0A1E-4D3F-86B5-255916EC6542}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckApdates", "CheckApdates\CheckApdates.csproj", "{B57F41A7-7853-4509-B559-EB3B78980D54}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MietClient", "MietClient\MietClient.csproj", "{17998327-8417-47E8-975E-6A069C3032E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +37,10 @@ Global
 		{87D859D2-0A1E-4D3F-86B5-255916EC6542}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87D859D2-0A1E-4D3F-86B5-255916EC6542}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87D859D2-0A1E-4D3F-86B5-255916EC6542}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B57F41A7-7853-4509-B559-EB3B78980D54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B57F41A7-7853-4509-B559-EB3B78980D54}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B57F41A7-7853-4509-B559-EB3B78980D54}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B57F41A7-7853-4509-B559-EB3B78980D54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17998327-8417-47E8-975E-6A069C3032E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17998327-8417-47E8-975E-6A069C3032E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17998327-8417-47E8-975E-6A069C3032E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17998327-8417-47E8-975E-6A069C3032E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
