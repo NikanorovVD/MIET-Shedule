@@ -1,4 +1,5 @@
 ﻿using DataLayer;
+using Microsoft.EntityFrameworkCore;
 
 namespace ServiceLayer.Services
 {
@@ -11,11 +12,12 @@ namespace ServiceLayer.Services
             _dbContext = dbContext;
         }
 
-        public IEnumerable<string> GetAll()
+        public async Task<IEnumerable<string>> GetAllAsync(CancellationToken cancellationToken)
         {
-            return _dbContext.Teachers
+            return await _dbContext.Teachers
                 .Select(c => c.Name)
-                .OrderBy(c => c);
+                .OrderBy(c => c)
+                .ToListAsync(cancellationToken);
         }
     }
 }

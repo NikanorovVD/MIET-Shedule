@@ -23,7 +23,7 @@ namespace ServiceLayer.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<PairDto>> GetGroupCouplesOnDateAsync(string group, DateTime date, IEnumerable<string>? ignored = null)
+        public async Task<IEnumerable<PairDto>> GetGroupCouplesOnDateAsync(string group, DateTime date, CancellationToken cancellationToken, IEnumerable<string>? ignored = null)
         {
             var dateFilter = _dateFilterService.DateFilter(date);
             var ignoredFilter = _ignoredFilterService.IgnoredFilter(ignored);
@@ -34,13 +34,13 @@ namespace ServiceLayer.Services
                 .Where(ignoredFilter)
                 .OrderBy(c => c.Order)
                 .ProjectTo<PairDto>(_mapper.ConfigurationProvider)
-                .ToListAsync();
+                .ToListAsync(cancellationToken);
             return couples.WithDate(date);
         }
 
-        public IEnumerable<TeacherPairGroupedDto> GetTeacherCouples(string teacher, DateTime startDate, DateTime endDate)
+        public async Task<IEnumerable<TeacherPairGroupedDto>> GetTeacherCouplesAsync(string teacher, DateTime startDate, DateTime endDate, CancellationToken cancellationToken)
         {
-            IEnumerable<TeacherPair> pairs = _appDbContext.SPTeacherPairs(teacher, startDate, endDate).ToList();
+            IEnumerable<TeacherPair> pairs = await _appDbContext.SPTeacherPairs(teacher, startDate, endDate).ToListAsync(cancellationToken);
 
             return pairs.GroupBy(p => new { p.Date, p.Name, p.Order, p.Start, p.End, p.Teacher })
                 .Select(gr => new TeacherPairGroupedDto()
@@ -59,9 +59,11 @@ namespace ServiceLayer.Services
                 });
         }
 
-        public  IEnumerable<PairExportDto> GetAllExportCouples()
+        public async Task<IEnumerable<PairExportDto>> GetAllExportCouplesAsync(CancellationToken cancellationToken)
         {
-            return _appDbContext.Pairs.Select(c => _mapper.Map<PairExportDto>(c));
+            return await _appDbContext.Pairs
+                .ProjectTo<PairExportDto>(_mapper.ConfigurationProvider)
+                .ToListAsync(cancellationToken);
         }
     }
 }

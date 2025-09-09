@@ -13,6 +13,7 @@ namespace ServiceLayer.Services
     {
         private readonly AppDbContext _dbContext;
         private readonly SheduleSettings _sheduleSettings;
+
         public DatabaseInitService(IServiceScopeFactory serviceScopeFactory)
         {
             var serviceProvider = serviceScopeFactory.CreateScope().ServiceProvider;
