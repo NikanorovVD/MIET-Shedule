@@ -16,6 +16,10 @@ namespace DataLayer.Configuration
             builder.HasOne<Group>(p => p.Group)
                 .WithMany()
                 .HasForeignKey(p => p.GroupId);
+
+            builder.HasOne<TimePair>(p => p.Time)
+                .WithMany()
+                .HasForeignKey(p => p.Order);
         }
     }
 }
