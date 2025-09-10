@@ -13,18 +13,9 @@ tr:nth-child(odd) {
     background: #FFF;
 }
 
-th, td {
+th,
+td {
     padding-left: 1rem;
     padding-right: 1rem;
 }
 
-.shedule_section{
-    display: grid;
-    place-items: center;
-}
-
-.error-input {
-    border: 1px solid red; 
-    box-shadow: 0 0 5px rgba(255, 0, 0, 0,7); 
-    transition: all 0.3s ease-in-out; 
-  }

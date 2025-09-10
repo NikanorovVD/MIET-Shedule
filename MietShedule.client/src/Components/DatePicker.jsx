@@ -6,7 +6,7 @@ export default function DatePicker({ value, minusDay, addDay, setDate, ...props 
             <button className="triangle-buttons" onClick={() => minusDay()}>
                 <div className="triangle-buttons__triangle triangle-buttons__triangle--l"></div>
             </button>
-            <input type="date"
+            <input className="date-input" type="date"
                 value={value}
                 onChange={(event) => setDate(event.target.value)}>
             </input>

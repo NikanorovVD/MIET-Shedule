@@ -1,0 +1,66 @@
+.datapicker-container {
+    display: flex;
+    /* Включаем Flexbox для контейнера */
+    gap: 10px;
+    /* Задаем расстояние между элементами */
+}
+
+.triangle-buttons {
+    /* Center the content */
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin: 8px 0;
+    /* Spacing */
+    padding: 0.5rem;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: #e0e0e0;
+    cursor: pointer;
+    transition: border-color 0.25s;
+}
+
+.triangle-buttons:hover {
+    border-color: #646cff;
+}
+
+
+.triangle-buttons__triangle {
+    border-style: solid;
+
+    /* Size */
+    height: 0px;
+    width: 0px;
+}
+
+.triangle-buttons__triangle--t {
+    border-color: transparent transparent #4a4f58;
+    border-width: 0 0.5rem 0.5rem;
+}
+
+.triangle-buttons__triangle--r {
+    border-color: transparent transparent transparent #4a4f58;
+    border-width: 0.5rem 0 0.5rem 0.5rem;
+}
+
+.triangle-buttons__triangle--b {
+    border-color: #4a4f58 transparent transparent;
+    border-width: 0.5rem 0.5rem 0;
+}
+
+.triangle-buttons__triangle--l {
+    border-color: transparent #4a4f58 transparent transparent;
+    border-width: 0.5rem 0.5rem 0.5rem 0;
+}
+
+
+.date-input {
+    width: 260px !important;
+    height: 34px !important;
+    margin: 8px 0 !important;
+    font-size: 14px !important;
+    padding-left: 15px !important;
+}

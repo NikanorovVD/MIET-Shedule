@@ -1,41 +1,41 @@
-.couple{
+.teacher-pair{
     margin: 10px;
     border: 1px solid black;
     width: 600px;
 }
-.order2{ 
+.teacher-order{ 
     font-size: 20px;
     background-color: #eaeaea;
-    width: 35px;
+    width: 50px;
 }
-.name{
+.teacher-name{
     background-color: #eaeaea;
     text-align: left;
     font-size: 16px;
 }
-.teacher{
+.teacher-teacher{
     background-color: #eaeaea;
     text-align: left;
     font-size: 12px;
     margin: 0;
 }
-.group{ 
+.teacher-group{ 
     background-color: #eaeaea;
     text-align: left;
     font-size: 16px;
     margin: 0;
 }
-.date{ 
+.teacher-date{ 
     background-color: #eaeaea;
     font-size: 20px;
 }
-.auditorium{
+.teacher-auditorium{
     background-color: #eaeaea;
     text-align: left;
     font-size: 12px;
     margin: 0;
 }
-.time{
+.teacher-time{
     background-color: #eaeaea;
     font-size: 12px;
     width: 70px;

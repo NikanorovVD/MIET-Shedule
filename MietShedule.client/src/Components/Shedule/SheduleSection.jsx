@@ -1,24 +1,17 @@
-import useDate from "../hooks/useDate";
-import DatePicker from "./Button/DatePicker";
-import SheduleCouple from "./SheduleCouple";
+import useDate from "../../hooks/useDate";
+import DatePicker from "../DatePicker";
+import ShedulePair from "./ShedulePair";
 import "./SheduleSection.css"
 import { useCallback, useEffect, useState } from "react";
 
-
 export default function SheduleSection() {
-
-    const url = new URL(window.location.href);
-    const urlParams = new URLSearchParams(url.search)
-    const defaultGroup = urlParams.get("group") ?? ""
-    const defaultIgnored = urlParams.get("ignore") ?? ""
-
-    const [group, setGroup] = useState(defaultGroup)
+    const [group, setGroup] = useState('')
     const [groupsList, setGroupsList] = useState()
     const [shedule, setShedule] = useState()
     const date = useDate()
-    const [ignored, setIgnored] = useState(defaultIgnored)
     const [invalidGroup, setInvalidGroup] = useState(false)
 
+    // запрос списка групп
     const fetchGroupsList = useCallback(async () => {
         const groupsListResponse = await fetch("Groups")
         if (groupsListResponse.status == 200) {
@@ -27,22 +20,24 @@ export default function SheduleSection() {
         }
     }, [])
 
+    // запрос расписания группы
     const fetchShedule = useCallback(async () => {
         if (group.length != 0) {
-            let query = `Shedule/${group}?dateString=${(new Date(date.value)).toLocaleDateString("en-GB")}`
-            if (ignored.length != 0) query += `&ignored=${ignored}`
+            let query = `Shedule/${group}?dateString=${(new Date(date.value)).toISOString().slice(0, 10)}`
             const sheduleResponse = await fetch(query)
             if (sheduleResponse.status == 200) {
                 const sheduleRecords = await sheduleResponse.json()
                 setShedule(sheduleRecords)
             }
         }
-    }, [group, date.value, ignored])
+    }, [group, date.value])
 
+    // получение списка групп при старте
     useEffect(() => {
         fetchGroupsList()
     }, [])
 
+    // получение расписания при изменении ввода
     useEffect(() => {
         if (groupsList != undefined && groupsList.includes(group)) {
             fetchShedule()
@@ -54,41 +49,37 @@ export default function SheduleSection() {
                 setInvalidGroup(true)
             }
         }
-    }, [group, date.value, groupsList, ignored])
+    }, [group, date.value, groupsList])
 
-    function keyExtractor(couple) {
-        return `${couple.name}-${couple.date}-${couple.teacher}-${couple.order}-${couple.auditorium}-${couple.group}`;
-    }
 
     return (
         <section className="shedule_section">
             {groupsList != undefined &&
                 <>
                     <div>
-                        <input className={invalidGroup ? "error-input" : ""} type="text" list="groups" value={group} onChange={(event) => setGroup(event.target.value)} />
+                        <input
+                            className={`shedule-form-in ${invalidGroup ? "error-input" : ""}`}
+                            type="text"
+                            list="groups"
+                            value={group}
+                            onChange={(event) => setGroup(event.target.value)} />
                         <datalist id="groups">
                             {groupsList.map(g => <option key={g}>{g}</option>)}
                         </datalist>
                     </div>
                     <DatePicker {...date} />
                 </>
-
             }
 
             {shedule != undefined &&
                 shedule.map(c =>
-                    <SheduleCouple key={keyExtractor(c)} {...c}></SheduleCouple>
+                    <ShedulePair key={c.order} {...c}></ShedulePair>
                 )
             }
 
             {
                 shedule != undefined && shedule.length == 0 &&
                 <h2>Нет занятий</h2>
-            }
-
-            {
-                ignored.length != 0 &&
-                <p>Ignore: {ignored}</p>
             }
         </section>
     )

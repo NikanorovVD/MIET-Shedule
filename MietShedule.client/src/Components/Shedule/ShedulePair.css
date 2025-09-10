@@ -1,41 +1,48 @@
-.couple{
+.shedule-pair {
     margin: 10px;
     border: 1px solid black;
     width: 600px;
 }
-.order{ 
+
+.shedule-order {
     font-size: 20px;
     background-color: #eaeaea;
-    width: 50px;
+    width: 35px;
 }
-.name{
+
+.shedule-name {
     background-color: #eaeaea;
     text-align: left;
     font-size: 16px;
 }
-.teacher{
+
+.shedule-teacher {
     background-color: #eaeaea;
     text-align: left;
     font-size: 12px;
     margin: 0;
 }
-.group{ 
+
+.shedule-group {
     background-color: #eaeaea;
     text-align: left;
     font-size: 16px;
     margin: 0;
 }
-.date{ 
+
+.shedule-date {
     background-color: #eaeaea;
     font-size: 20px;
 }
-.auditorium{
+
+.shedule-auditorium {
     background-color: #eaeaea;
     text-align: left;
     font-size: 12px;
     margin: 0;
 }
-.time{
+
+.shedule-time {
     background-color: #eaeaea;
     font-size: 12px;
     width: 70px;

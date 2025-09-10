@@ -1,26 +1,22 @@
 import './App.css';
 import { useState } from 'react';
-import SheduleSection from './Components/SheduleSection';
-import TabSection from './Components/TabSection';
-import TeacherSection from './Components/TeacherSection';
-import ExportSection from './Components/ExportSection';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import SheduleSection from './Components/Shedule/SheduleSection';
+import Header from './Components/Header';
+import TeacherSection from './Components/Teacher/TeacherSection';
+import ExportSection from './Components/Export/ExportSection';
 
 function App() {
-    const [tab, setTab] = useState('shedule')
     return (
         <>
-            <TabSection activeTab={tab} OnChange={(current) => setTab(current)} />
-            <main>
-                {tab == 'shedule' && (
-                    < SheduleSection />
-                )}
-                {tab == 'teacher' && (
-                    <TeacherSection />
-                )}
-                {tab == 'export' && (
-                    <ExportSection />
-                )}
-            </main>
+            <BrowserRouter>
+                <Header />
+                <Routes>
+                    <Route path='/' element={<SheduleSection />} />
+                    <Route path='/teacher' element={<TeacherSection />} />
+                    <Route path='/export' element={<ExportSection />} />
+                </Routes>
+            </BrowserRouter>
         </>
     );
 }

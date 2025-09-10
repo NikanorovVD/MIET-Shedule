@@ -14,19 +14,13 @@ export default function ExportSection() {
             })
     }
 
-
     return (
         <section >
-            <h3>Загрузить расписание МИЭТ</h3>
+            <h3 className='export-header'>Загрузить расписание МИЭТ</h3>
             <button
-                className='download_button'
-                onClick={() => downloadFile('Export/Adapted', 'MIET-Shedule-adapted.json')}>
-                В адаптированном формате
-            </button>
-            <button
-                className='download_button'
-                onClick={() => downloadFile('Export/Origin', 'MIET-Shedule-origin.json')}>
-                В исходном формате MIET-API
+                className='download-button'
+                onClick={() => downloadFile('Export', 'MIET-Shedule.json')}>
+                Скачать файл
             </button>
         </section>
     )
