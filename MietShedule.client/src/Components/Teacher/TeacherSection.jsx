@@ -55,7 +55,7 @@ export default function TeacherSection() {
     }, [teacher, startDate.value, endDate.value, teacherList])
 
     function keyExtractor(couple) {
-        return `${couple.name}-${couple.date}-${couple.teacher}-${couple.order}-${couple.auditorium}-${couple.group}`;
+        return `${couple.name}-${couple.date}-${couple.teacher}-${couple.order}-${couple.auditoriums}-${couple.groups}`;
     }
 
     return (

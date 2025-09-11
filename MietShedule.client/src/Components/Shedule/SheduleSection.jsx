@@ -51,6 +51,9 @@ export default function SheduleSection() {
         }
     }, [group, date.value, groupsList])
 
+    function keyExtractor(couple) {
+        return `${couple.name}-${couple.teacher}-${couple.order}-${couple.auditorium}-${couple.group}`;
+    }
 
     return (
         <section className="shedule_section">
@@ -73,7 +76,7 @@ export default function SheduleSection() {
 
             {shedule != undefined &&
                 shedule.map(c =>
-                    <ShedulePair key={c.order} {...c}></ShedulePair>
+                    <ShedulePair key={keyExtractor(c)} {...c}></ShedulePair>
                 )
             }
 
