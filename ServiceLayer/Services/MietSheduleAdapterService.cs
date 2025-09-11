@@ -12,7 +12,7 @@ namespace ServiceLayer.Services
                 mietPairs.Select(
                     p => new Teacher()
                     {
-                        Name = p.Class.TeacherFull
+                        Name = p.Class.TeacherFull.Trim(),
                     })
                 .Distinct(new TeacherNameComparer())
                 .ToDictionary(t => t.Name));
@@ -21,7 +21,7 @@ namespace ServiceLayer.Services
                 mietPairs.Select(
                     p => new Group()
                     {
-                        Name = p.Group.Name
+                        Name = p.Group.Name.Trim(),
                     })
                 .Distinct(new GroupNameComparer())
                 .ToDictionary(g => g.Name));
@@ -37,8 +37,8 @@ namespace ServiceLayer.Services
                 Day = mietPair.Day,
                 Name = mietPair.Class.Name,
                 Auditorium = mietPair.Room.Name,
-                Teacher = teachers[mietPair.Class.TeacherFull],
-                Group = groups[mietPair.Group.Name],
+                Teacher = teachers[mietPair.Class.TeacherFull.Trim()],
+                Group = groups[mietPair.Group.Name.Trim()],
                 WeekType = mietPair.DayNumber switch
                 {
                     0 => WeekType.ПервыйЧислитель,
