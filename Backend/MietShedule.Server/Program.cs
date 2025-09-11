@@ -1,5 +1,6 @@
 using DataLayer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using MietClient;
 using MietShedule.Server.Automapper;
 using ServiceLayer.Configuration;
@@ -14,6 +15,7 @@ namespace MietShedule.Server
             var builder = WebApplication.CreateBuilder(args);
             var services = builder.Services;
             var configuration = builder.Configuration;
+            configuration.AddJsonFile("appsettings.times.json", optional: true, reloadOnChange: true);
 
             services.Configure<MietClientSettings>(configuration.GetSection("MietClient"));
             services.Configure<SheduleSettings>(configuration.GetSection("Shedule"));
