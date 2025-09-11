@@ -18,6 +18,7 @@ namespace ServiceLayer.Services
 
         public Expression<Func<Pair, bool>> DateFilter(DateTime date)
         {
+            if(date.Date < _startDate.Date) return c => false;
             return c => c.Day == DayOfWeek(date) && c.WeekType == GetWeekType(WeekNumber(date));
         }
 
