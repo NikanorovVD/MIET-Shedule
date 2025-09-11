@@ -32,7 +32,7 @@ namespace MietShedule.Server.Controllers
         public async Task<IEnumerable<PairDto>> GetGroupSheduleAsync(string group, string dateString, CancellationToken cancellationToken, string ignored = "")
         {
             IEnumerable<string> ignoredCouples = ignored.Split(',').Select(s => s.Trim());
-            DateTime date = DateTime.ParseExact(dateString, _formatSettings.DateFormat, CultureInfo.InvariantCulture);
+            DateTime date = DateTime.ParseExact(dateString, _formatSettings.DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
             return await _coupleService.GetGroupCouplesOnDateAsync(group, date, cancellationToken, ignoredCouples);
         }
 
@@ -47,8 +47,8 @@ namespace MietShedule.Server.Controllers
         [HttpGet("teacher/{teacher}")]
         public async Task<IEnumerable<TeacherPairGroupedDto>> GetTeacherSheduleAsync(string teacher, string startDate, string endDate, CancellationToken cancellationToken)
         {
-            DateTime startDateParsed = DateTime.ParseExact(startDate, _formatSettings.DateFormat, CultureInfo.InvariantCulture).ToUniversalTime();
-            DateTime endDateParsed = DateTime.ParseExact(endDate, _formatSettings.DateFormat, CultureInfo.InvariantCulture).ToUniversalTime();
+            DateTime startDateParsed = DateTime.ParseExact(startDate, _formatSettings.DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
+            DateTime endDateParsed = DateTime.ParseExact(endDate, _formatSettings.DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
             return await _coupleService.GetTeacherCouplesAsync(teacher, startDateParsed, endDateParsed, cancellationToken);
         }
     }
