@@ -18,20 +18,21 @@ a {
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
 
+/* Теперь body больше не центрирован */
 
-.control{
+
+.control {
   border: 1px solid #ccc;
   border-radius: 5;
   padding: 0.5rem 1rem;
@@ -44,9 +45,11 @@ body {
     color: #213547;
     background-color: #ffffff;
   }
+
   a:hover {
     color: #747bff;
   }
+
   button {
     background-color: #f9f9f9;
   }
