@@ -393,3 +393,5 @@ FodyWeavers.xsd
 *.sln.iml
 
 appsettings.Development.json
+.env.local
+.env

@@ -43,9 +43,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ServiceLayer\ServiceLayer.csproj" />
-    <ProjectReference Include="..\MietShedule.client\MietShedule.client.esproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
   </ItemGroup>
 
   <ItemGroup>

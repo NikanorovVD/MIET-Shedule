@@ -1,0 +1,50 @@
+services:
+  backend:
+    image: plant
+    build:
+      context: ./Backend
+      dockerfile: ./Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:80"
+    environment:
+      ASPNETCORE_URLS: https://*:80;http://*:50
+      ConnectionStrings__DefaultConnection: "User ID=${DB_USER};Password=${DB_PASSWORD};Host=db;Port=5432;Database=shedule;"
+      MietClient__SheduleUrl: "https://www.miet.ru/schedule/data"
+      MietClient__GroupsUrl: "https://www.miet.ru/schedule/groups"
+      MietClient__Cookies__CookiesHeader: "Cookie"
+      MietClient__Cookies__CookiesString: ${COOKIES}
+      ParseSheduleOnStart: true
+      CronUpdateShedule: "0 0 0 * * ?"
+      Format__DateFormat: "yyyy-MM-dd"
+      Shedule__StartDate: "2025-09-01"
+    volumes:
+      - logs:/app/logs
+  db:
+    image: postgres:16.0
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USER}
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - db-data:/var/lib/postgresql/data
+  frontend:
+    image: frontend
+    build:
+      context: ./Frontend
+      dockerfile: ./Dockerfile
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_APP_URL: "http://backend:50"
+    depends_on:
+      - backend
+volumes:
+  logs:
+  db-data:
