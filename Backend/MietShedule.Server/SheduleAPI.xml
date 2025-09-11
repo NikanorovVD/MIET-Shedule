@@ -4,43 +4,39 @@
         <name>MietShedule.Server</name>
     </assembly>
     <members>
-        <member name="M:MietShedule.Server.Controllers.ExportController.GetAdaptedData">
+        <member name="M:MietShedule.Server.Controllers.ExportController.GetAdaptedDataAsync(System.Threading.CancellationToken)">
             <summary>
             Скачать расписание в адаптированном формате
             </summary>
             <returns>Файл с адаптированным расписанием в формате json</returns>
         </member>
-        <member name="M:MietShedule.Server.Controllers.ExportController.GetOriginData">
-            <summary>
-            Скачать расписание в исходном формате MIET-API
-            </summary>
-            <returns>Файл с исходным расписанием в формате json</returns>
-        </member>
-        <member name="M:MietShedule.Server.Controllers.GroupsController.AllGroups">
+        <member name="M:MietShedule.Server.Controllers.GroupsController.GetAllGroupsAsync(System.Threading.CancellationToken)">
             <summary>
             Получение списка всех групп МИЭТ
             </summary>
             <returns>Список всех групп</returns>
         </member>
-        <member name="M:MietShedule.Server.Controllers.SheduleController.GetGroupShedule(System.String,System.String,System.String)">
+        <member name="M:MietShedule.Server.Controllers.SheduleController.GetGroupSheduleAsync(System.String,System.String,System.Threading.CancellationToken,System.String)">
             <summary>
             Расписание группы на день
             </summary>
             <param name="group">Учебная группа без учета регистра</param>
-            <param name="dateString">Дата в формате dd/mm/yyyy</param>
+            <param name="dateString">Дата в формате yyyy-MM-dd</param>
+            <param name="cancellationToken"></param>
             <param name="ignored">Названия предметов которые не будут показаны: через запятую, без учета регистра, поддерживает регулярные выражения</param>
             <returns>Список пар</returns>
         </member>
-        <member name="M:MietShedule.Server.Controllers.SheduleController.GetTeacherShedule(System.String,System.String,System.String)">
+        <member name="M:MietShedule.Server.Controllers.SheduleController.GetTeacherSheduleAsync(System.String,System.String,System.String,System.Threading.CancellationToken)">
             <summary>
             Поиск пар преподавателя в заданный период
             </summary>
             <param name="teacher">строка поиска: поиск по вхождению в полное ФИО без учета регистра</param>
-            <param name="startDate">начальная дата периода в формате dd/mm/yyyy (включается в период)</param>
-            <param name="endDate">конечная дата периода в формате dd/mm/yyyy (включается в период)</param>
+            <param name="startDate">начальная дата периода в формате yyyy-MM-dd (включается в период)</param>
+            <param name="endDate">конечная дата периода в формате yyyy-MM-dd (включается в период)</param>
+            <param name="cancellationToken"></param>
             <returns>Список пар</returns>
         </member>
-        <member name="M:MietShedule.Server.Controllers.TeachersController.AllGroups">
+        <member name="M:MietShedule.Server.Controllers.TeachersController.AllGroupsAsync(System.Threading.CancellationToken)">
             <summary>
             Получение списка ФИО всех преподавателей МИЭТ
             </summary>

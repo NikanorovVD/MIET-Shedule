@@ -392,5 +392,4 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-MietShedule.Server/appsettings.Development.json
-origin_shedule.json
+appsettings.Development.json
