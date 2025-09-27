@@ -4,7 +4,7 @@ export default function Header() {
     return (
         <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <div className="container-fluid">
-                <img style={{ height: "50px", paddingRight: "10px" }} src="миэт.ico"></img>
+                <img style={{ height: "50px", paddingRight: "10px" }} src="miet.ico"></img>
                 <a className="navbar-brand">MIET Shedule</a>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
