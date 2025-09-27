@@ -1,6 +1,6 @@
 services:
   backend:
-    image: plant
+    image: backend
     build:
       context: ./Backend
       dockerfile: ./Dockerfile
