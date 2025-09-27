@@ -34,7 +34,7 @@ namespace MietClient
         {
             string fullUrl = $"{_sheduleUrl}/{group}";
             HttpRequestMessage request = new(HttpMethod.Post, fullUrl);
-            request.Headers.Add(_cookies.CookiesHeader, _cookies.CookiesString);
+            request.Headers.Add("Cookie", _cookies.CookiesString);
             request.Content = new FormUrlEncodedContent(
             [
                 new("group", group)
@@ -54,7 +54,7 @@ namespace MietClient
         private async Task<IEnumerable<string>> GetMietGroupsAsync(CancellationToken cancellationToken = default)
         {
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, _groupsUrl);
-            request.Headers.Add(_cookies.CookiesHeader, _cookies.CookiesString);
+            request.Headers.Add("Cookie", _cookies.CookiesString);
 
             HttpResponseMessage response = await _httpClient.SendAsync(request, cancellationToken);
 
