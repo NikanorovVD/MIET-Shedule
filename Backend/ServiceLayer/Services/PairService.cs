@@ -3,6 +3,8 @@ using AutoMapper.QueryableExtensions;
 using DataLayer;
 using DataLayer.Entities.Virtual;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using ServiceLayer.Configuration;
 using ServiceLayer.Models;
 using ServiceLayer.QueryObjects;
 
@@ -14,13 +16,15 @@ namespace ServiceLayer.Services
         private readonly DateFilterService _dateFilterService;
         private readonly IgnoredFilterService _ignoredFilterService;
         private readonly IMapper _mapper;
+        private readonly DateTime _semesterStartDate;
 
-        public PairService(AppDbContext appDbContext, DateFilterService dateFilterService, IgnoredFilterService ignoredFilterService, IMapper mapper)
+        public PairService(AppDbContext appDbContext, DateFilterService dateFilterService, IgnoredFilterService ignoredFilterService, IMapper mapper, IOptions<SheduleSettings> options)
         {
             _appDbContext = appDbContext;
             _dateFilterService = dateFilterService;
             _ignoredFilterService = ignoredFilterService;
             _mapper = mapper;
+            _semesterStartDate = options.Value.StartDate;
         }
 
         public async Task<IEnumerable<PairDto>> GetGroupCouplesOnDateAsync(string group, DateTime date, CancellationToken cancellationToken, IEnumerable<string>? ignored = null)
@@ -40,7 +44,7 @@ namespace ServiceLayer.Services
 
         public async Task<IEnumerable<TeacherPairGroupedDto>> GetTeacherCouplesAsync(string teacher, DateTime startDate, DateTime endDate, CancellationToken cancellationToken)
         {
-            IEnumerable<TeacherPair> pairs = await _appDbContext.SPTeacherPairs(teacher, startDate, endDate).ToListAsync(cancellationToken);
+            IEnumerable<TeacherPair> pairs = await _appDbContext.SPTeacherPairs(teacher, startDate, endDate, _semesterStartDate).ToListAsync(cancellationToken);
 
             return pairs.GroupBy(p => new { p.Date, p.Name, p.Order, p.Start, p.End, p.Teacher })
                 .Select(gr => new TeacherPairGroupedDto()
@@ -54,8 +58,8 @@ namespace ServiceLayer.Services
                         End = gr.Key.End,
                     },
                     Teacher = gr.Key.Teacher,
-                    Auditoriums = gr.Select(p => p.Auditorium).Distinct(),
-                    Groups = gr.Select(p => p.Group).Distinct()
+                    Auditoriums = gr.Select(p => p.Auditorium).Distinct().OrderBy(a => a),
+                    Groups = gr.Select(p => p.Group).Distinct().OrderBy(g => g)
                 });
         }
 

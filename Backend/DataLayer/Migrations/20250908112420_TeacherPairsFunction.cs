@@ -9,9 +9,10 @@ namespace DataLayer.Migrations
     {
         private const string _createFunctionQuery = @"
                 CREATE OR REPLACE FUNCTION teacher_pairs_in_date_range(
-                    teacher_name_part TEXT, -- Строка поиска по имени преподавателя
-                    start_date DATE,        -- Начальная дата диапазона (включительно)
-                    end_date DATE           -- Конечная дата диапазона (включительно)
+                    teacher_name_part TEXT,     -- Строка поиска по имени преподавателя
+                    start_date DATE,            -- Начальная дата диапазона (включительно)
+                    end_date DATE,              -- Конечная дата диапазона (включительно)
+                    semester_start_date DATE    -- Дата начала семестра
                 )
                 RETURNS TABLE (
                     ""Date"" DATE,
@@ -30,7 +31,7 @@ namespace DataLayer.Migrations
 	                SELECT 
 		                date,
 		                EXTRACT(DOW FROM date) as DayOfWeek,
-		                DATE_PART('day', date - start_date)::INT / 7 % 4 as WeekType
+		                DATE_PART('day', date - semester_start_date)::INT / 7 % 4 as WeekType
 	                FROM generate_series(
 		                start_date,
 		                end_date,
