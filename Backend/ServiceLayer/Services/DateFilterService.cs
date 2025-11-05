@@ -19,7 +19,7 @@ namespace ServiceLayer.Services
         public Expression<Func<Pair, bool>> DateFilter(DateTime date)
         {
             if(date.Date < _startDate.Date) return c => false;
-            return c => c.Day == DayOfWeek(date) && c.WeekType == GetWeekType(WeekNumber(date));
+            return c => c.Day == DayOfWeek(date) && c.WeekType == GetWeekType(date);
         }
 
         private int DayOfWeek(DateTime date)
@@ -32,20 +32,13 @@ namespace ServiceLayer.Services
         {
             TimeSpan timeSpan = date - _startDate;
             int days = (int)timeSpan.TotalDays;
-            return days / _daysInWeek + 1;
+            return days / _daysInWeek;
         }
 
-        private WeekType GetWeekType(int weekNumber)
+        private WeekType GetWeekType(DateTime date)
         {
-            int weekType = weekNumber % _weekTypesCount;
-            return weekType switch
-            {
-                1 => WeekType.ПервыйЧислитель,
-                2 => WeekType.ПервыйЗнаменатель,
-                3 => WeekType.ВторойЧислитель,
-                0 => WeekType.ВторойЗнаменатель,
-                _ => throw new InvalidOperationException($"Invalid week type: {weekNumber} (week number : {weekNumber})")
-            };
+            int weekNumber = WeekNumber(date);
+            return (WeekType)(weekNumber % 4);
         }
     }
 }
