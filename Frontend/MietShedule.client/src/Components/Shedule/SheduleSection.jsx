@@ -4,8 +4,8 @@ import ShedulePair from "./ShedulePair";
 import "./SheduleSection.css"
 import { useCallback, useEffect, useState } from "react";
 
-export default function SheduleSection() {
-    const [group, setGroup] = useState('')
+export default function SheduleSection({ defaultGroup }) {
+    const [group, setGroup] = useState(defaultGroup)
     const [groupsList, setGroupsList] = useState()
     const [shedule, setShedule] = useState()
     const date = useDate()
@@ -37,19 +37,19 @@ export default function SheduleSection() {
         fetchGroupsList()
     }, [])
 
-    // получение расписания при изменении ввода
     useEffect(() => {
-        if (groupsList != undefined && groupsList.includes(group)) {
-            fetchShedule()
-            setInvalidGroup(false)
+        if (groupsList === undefined) return;
+
+        const currentGroup = group || defaultGroup;
+
+        if (currentGroup && currentGroup.length !== 0 && groupsList.includes(currentGroup)) {
+            fetchShedule();
+            setInvalidGroup(false);
+        } else {
+            setShedule(undefined);
+            setInvalidGroup(!!(currentGroup && currentGroup.length !== 0));
         }
-        else {
-            setShedule(undefined)
-            if (group.length != 0) {
-                setInvalidGroup(true)
-            }
-        }
-    }, [group, date.value, groupsList])
+    }, [group, date.value, groupsList, defaultGroup]);
 
     function keyExtractor(couple) {
         return `${couple.name}-${couple.teacher}-${couple.order}-${couple.auditorium}-${couple.group}`;
