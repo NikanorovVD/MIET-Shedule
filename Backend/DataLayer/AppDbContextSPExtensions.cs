@@ -15,7 +15,7 @@ namespace DataLayer
                     new NpgsqlParameter("@teacherSearchString", $"%{teacherSearchString}%"),
                     new NpgsqlParameter("@startDate", DateOnly.FromDateTime(startDate)),
                     new NpgsqlParameter("@endDate", DateOnly.FromDateTime(endDate)),
-                    new NpgsqlParameter("@semesterStartDate", DateOnly.FromDateTime(endDate))
+                    new NpgsqlParameter("@semesterStartDate", DateOnly.FromDateTime(semesterStartDate))
                     );
         }
     }
