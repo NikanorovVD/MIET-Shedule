@@ -39,14 +39,7 @@ namespace ServiceLayer.Services
                 Auditorium = mietPair.Room.Name,
                 Teacher = teachers[mietPair.Class.TeacherFull.Trim()],
                 Group = groups[mietPair.Group.Name.Trim()],
-                WeekType = mietPair.DayNumber switch
-                {
-                    0 => WeekType.ПервыйЧислитель,
-                    1 => WeekType.ПервыйЗнаменатель,
-                    2 => WeekType.ВторойЧислитель,
-                    3 => WeekType.ВторойЗнаменатель,
-                    _ => throw new InvalidOperationException($"Invalid DayNumber: {mietPair.DayNumber}")
-                }
+                WeekType = (WeekType)mietPair.DayNumber
             };
         }
     }
