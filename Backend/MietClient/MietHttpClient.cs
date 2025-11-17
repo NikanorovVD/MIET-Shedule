@@ -62,10 +62,19 @@ namespace MietClient
                 throw new HttpRequestException($"Error requesting {_groupsUrl}", null, statusCode: response.StatusCode);
 
 
-            IEnumerable<string> groups = await JsonSerializer.DeserializeAsync<IEnumerable<string>>(response.Content.ReadAsStream(cancellationToken), cancellationToken: cancellationToken)
+            IEnumerable<string> allGroups = await JsonSerializer.DeserializeAsync<IEnumerable<string>>(response.Content.ReadAsStream(cancellationToken), cancellationToken: cancellationToken)
                  ?? throw new SerializationException($"Deserialization fail for request: {_groupsUrl}");
 
-            return groups;
+            IEnumerable<string> mietGroups = ExludeCollegeGroups(allGroups);
+            return mietGroups;
+        }
+
+        private IEnumerable<string> ExludeCollegeGroups(IEnumerable<string> groups)
+        {
+            return groups.Where(gr => !IsCollegeGroup(gr));
+
+            bool IsCollegeGroup(string gr)
+                => (gr.EndsWith('О') || gr.EndsWith('С') || gr.Contains("колледж", StringComparison.InvariantCultureIgnoreCase));
         }
     }
 }

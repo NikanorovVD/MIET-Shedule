@@ -19,14 +19,22 @@
 
     public class MietTime
     {
-        public int Code { get; set; }
+        private int _code;
+        public int Code { get => _code; set
+            {
+                if (value > 8 || value < 1)
+                {
+                    throw new ArgumentException($"Invalid pair order: {value}");
+                }
+                _code = value;
+            }
+        }
         public string TimeFrom { get; set; }
         public string TimeTo { get; set; }
     }
 
     public class MietClass
     {
-        public string Code { get; set; }
         public string Name { get; set; }
         public string TeacherFull { get; set; }
         public string Teacher { get; set; }
@@ -34,13 +42,11 @@
 
     public class MietGroup
     {
-        public string Code { get; set; }
         public string Name { get; set; }
     }
 
     public class MietRoom
     {
-        public int Code { get; set; }
         public string Name { get; set; }
     }
 }
