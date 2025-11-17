@@ -43,6 +43,7 @@ services:
       - "5173:5173"
     environment:
       VITE_APP_URL: "https://backend:80"
+      VITE_API_SWAGGER_URL: ${API_SWAGGER_URL}
     depends_on:
       - backend
 volumes:

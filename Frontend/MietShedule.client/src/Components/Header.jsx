@@ -24,7 +24,7 @@ export default function Header() {
                     </ul>
                     <form onSubmit={(e) => e.preventDefault()} className="d-flex">
                         <a
-                            href={`${import.meta.env.VITE_APP_URL}swagger`}
+                            href={`${import.meta.env.VITE_API_SWAGGER_URL}`}
                             className="btn btn-outline-success"
                             target="_blank"
                             rel="noopener noreferrer"
