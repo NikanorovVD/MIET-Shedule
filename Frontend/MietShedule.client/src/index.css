@@ -29,16 +29,15 @@ body {
   min-height: 100vh;
 }
 
-/* Теперь body больше не центрирован */
-
-
 .control {
   border: 1px solid #ccc;
-  border-radius: 5;
+  border-radius: 5px;
   padding: 0.5rem 1rem;
   width: 100%;
   margin-bottom: 1rem;
+  box-sizing: border-box;
 }
+
 
 @media (prefers-color-scheme: light) {
   :root {

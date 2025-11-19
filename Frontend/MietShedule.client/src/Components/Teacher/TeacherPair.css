@@ -1,43 +1,59 @@
-.teacher-pair{
+.teacher-pair {
     margin: 10px;
     border: 1px solid black;
     width: 600px;
 }
-.teacher-order{ 
+
+.teacher-order {
     font-size: 20px;
     background-color: #eaeaea;
     width: 50px;
 }
-.teacher-name{
+
+.teacher-name {
     background-color: #eaeaea;
     text-align: left;
     font-size: 16px;
 }
-.teacher-teacher{
+
+.teacher-teacher {
     background-color: #eaeaea;
     text-align: left;
     font-size: 12px;
     margin: 0;
 }
-.teacher-group{ 
+
+.teacher-group {
     background-color: #eaeaea;
     text-align: left;
     font-size: 16px;
     margin: 0;
 }
-.teacher-date{ 
+
+.teacher-date {
     background-color: #eaeaea;
     font-size: 20px;
 }
-.teacher-auditorium{
+
+.teacher-auditorium {
     background-color: #eaeaea;
     text-align: left;
     font-size: 12px;
     margin: 0;
 }
-.teacher-time{
+
+.teacher-time {
     background-color: #eaeaea;
     font-size: 12px;
     width: 70px;
     margin: 0;
+}
+
+@media (max-width: 768px) {
+    .teacher-pair {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        margin: 10px 0;
+    }
 }

@@ -48,3 +48,12 @@
     width: 70px;
     margin: 0;
 }
+
+@media (max-width: 768px) {
+    .shedule-pair {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        margin: 10px 0;
+    }
+}

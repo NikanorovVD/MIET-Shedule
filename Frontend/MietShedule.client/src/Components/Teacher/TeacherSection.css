@@ -7,6 +7,24 @@
 }
 
 .teacher-section {
-    display: grid;
-    place-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.error-input {
+    border: 1px solid red !important;
+}
+
+@media (max-width: 768px) {
+    .teacher-input {
+        width: 100% !important;
+        max-width: 330px !important;
+        box-sizing: border-box !important;
+    }
+
+    .teacher-section {
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
 }

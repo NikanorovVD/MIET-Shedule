@@ -59,17 +59,16 @@ export default function TeacherSection() {
     }
 
     return (
-        <section className="shedule_section">
+        <section className="teacher-section">
             {teacherList != undefined &&
                 <>
-                    <div>
-                        <input
-                            className={`teacher-input ${invalidTeacher ? "error-input" : ""}`}
-                            type="text"
-                            list="teachers"
-                            value={teacher}
-                            onChange={(event) => setTeacher(event.target.value)} />
-                    </div>
+
+                    <input
+                        className={`teacher-input ${invalidTeacher ? "error-input" : ""}`}
+                        type="text"
+                        list="teachers"
+                        value={teacher}
+                        onChange={(event) => setTeacher(event.target.value)} />
                     <datalist id="teachers">
                         {teacherList.map(g => <option key={g}>{g}</option>)}
                     </datalist>

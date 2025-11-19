@@ -19,3 +19,9 @@ td {
     padding-left: 1rem;
     padding-right: 1rem;
 }
+
+@media (max-width: 768px) {
+    #root {
+        padding: 1rem;
+    }
+}
