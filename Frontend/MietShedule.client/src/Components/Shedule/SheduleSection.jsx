@@ -65,6 +65,7 @@ export default function SheduleSection({ defaultGroup }) {
                             type="text"
                             list="groups"
                             value={group}
+                            placeholder="Учебная группа"
                             onChange={(event) => setGroup(event.target.value)} />
                         <datalist id="groups">
                             {groupsList.map(g => <option key={g}>{g}</option>)}

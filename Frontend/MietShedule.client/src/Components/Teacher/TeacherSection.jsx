@@ -68,6 +68,7 @@ export default function TeacherSection() {
                         type="text"
                         list="teachers"
                         value={teacher}
+                        placeholder="ФИО преподавателя"
                         onChange={(event) => setTeacher(event.target.value)} />
                     <datalist id="teachers">
                         {teacherList.map(g => <option key={g}>{g}</option>)}
