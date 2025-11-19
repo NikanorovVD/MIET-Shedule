@@ -63,7 +63,12 @@ namespace ServiceLayer.Services
                 });
         }
 
-        public async Task<IEnumerable<PairExportDto>> GetAllExportCouplesAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerable<NearestPair>> GetNearestPairsAsync(string group, string filterString,CancellationToken cancellationToken)
+        {
+            return await _appDbContext.SPNearestPairs(_semesterStartDate, group, filterString).ToListAsync(cancellationToken);
+        }
+
+        public async Task<IEnumerable<PairExportDto>> GetAllExportPairsAsync(CancellationToken cancellationToken)
         {
             return await _appDbContext.Pairs
                 .ProjectTo<PairExportDto>(_mapper.ConfigurationProvider)

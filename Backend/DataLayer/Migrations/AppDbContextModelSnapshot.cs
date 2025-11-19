@@ -98,7 +98,54 @@ namespace DataLayer.Migrations
                     b.ToTable("Teachers");
                 });
 
-            modelBuilder.Entity("DataLayer.Entities.TeacherPair", b =>
+            modelBuilder.Entity("DataLayer.Entities.TimePair", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<TimeSpan>("End")
+                        .HasColumnType("interval");
+
+                    b.Property<TimeSpan>("Start")
+                        .HasColumnType("interval");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TimePairs");
+                });
+
+            modelBuilder.Entity("DataLayer.Entities.Virtual.NearestPair", b =>
+                {
+                    b.Property<string>("Auditorium")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("RemaningDays")
+                        .HasColumnType("integer");
+
+                    b.Property<DateOnly>("TargetDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("TeacherName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.ToTable((string)null);
+
+                    b.ToView(null, (string)null);
+                });
+
+            modelBuilder.Entity("DataLayer.Entities.Virtual.TeacherPair", b =>
                 {
                     b.Property<string>("Auditorium")
                         .IsRequired()
@@ -128,26 +175,9 @@ namespace DataLayer.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.ToTable("TeacherPairs");
-                });
+                    b.ToTable((string)null);
 
-            modelBuilder.Entity("DataLayer.Entities.TimePair", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<TimeSpan>("End")
-                        .HasColumnType("interval");
-
-                    b.Property<TimeSpan>("Start")
-                        .HasColumnType("interval");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TimePairs");
+                    b.ToView(null, (string)null);
                 });
 
             modelBuilder.Entity("DataLayer.Entities.Pair", b =>

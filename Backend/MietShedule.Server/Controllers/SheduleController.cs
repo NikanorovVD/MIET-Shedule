@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DataLayer.Entities.Virtual;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using ServiceLayer.Configuration;
 using ServiceLayer.Models;
@@ -11,12 +12,12 @@ namespace MietShedule.Server.Controllers
     [Route("[controller]")]
     public class SheduleController : ControllerBase
     {
-        private readonly PairService _coupleService;
+        private readonly PairService _pairService;
         private readonly FormatSettings _formatSettings;
 
         public SheduleController(PairService coupleService, IOptions<FormatSettings> options)
         {
-            _coupleService = coupleService;
+            _pairService = coupleService;
             _formatSettings = options.Value;
         }
 
@@ -33,7 +34,7 @@ namespace MietShedule.Server.Controllers
         {
             IEnumerable<string> ignoredCouples = ignored.Split(',').Select(s => s.Trim());
             DateTime date = DateTime.ParseExact(dateString, _formatSettings.DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
-            return await _coupleService.GetGroupCouplesOnDateAsync(group, date, cancellationToken, ignoredCouples);
+            return await _pairService.GetGroupCouplesOnDateAsync(group, date, cancellationToken, ignoredCouples);
         }
 
         /// <summary>
@@ -49,7 +50,20 @@ namespace MietShedule.Server.Controllers
         {
             DateTime startDateParsed = DateTime.ParseExact(startDate, _formatSettings.DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
             DateTime endDateParsed = DateTime.ParseExact(endDate, _formatSettings.DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
-            return await _coupleService.GetTeacherCouplesAsync(teacher, startDateParsed, endDateParsed, cancellationToken);
+            return await _pairService.GetTeacherCouplesAsync(teacher, startDateParsed, endDateParsed, cancellationToken);
+        }
+
+        /// <summary>
+        /// Получение ближайших занятий по каждой дисциплине
+        /// </summary>
+        /// <param name="group">Учебная группа</param>
+        /// <param name="filerString"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>Список пар</returns>
+        [HttpGet("nearest/{group}")]
+        public async Task<IEnumerable<NearestPair>> GetNearestPairsAsync(string group, string filerString, CancellationToken cancellationToken)
+        {
+            return await _pairService.GetNearestPairsAsync(group, filerString, cancellationToken);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -38,6 +39,20 @@ namespace DataLayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TimePairs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Start = table.Column<TimeSpan>(type: "interval", nullable: false),
+                    End = table.Column<TimeSpan>(type: "interval", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TimePairs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Pairs",
                 columns: table => new
                 {
@@ -66,12 +81,23 @@ namespace DataLayer.Migrations
                         principalTable: "Teachers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Pairs_TimePairs_Order",
+                        column: x => x.Order,
+                        principalTable: "TimePairs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Pairs_GroupId",
                 table: "Pairs",
                 column: "GroupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pairs_Order",
+                table: "Pairs",
+                column: "Order");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Pairs_TeacherId",
@@ -90,6 +116,9 @@ namespace DataLayer.Migrations
 
             migrationBuilder.DropTable(
                 name: "Teachers");
+
+            migrationBuilder.DropTable(
+                name: "TimePairs");
         }
     }
 }

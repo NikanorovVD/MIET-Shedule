@@ -13,6 +13,7 @@ namespace DataLayer
         public DbSet<TimePair> TimePairs { get; set; }
 
         public virtual DbSet<TeacherPair> TeacherPairs { get; set; }
+        public virtual DbSet<NearestPair> NearestPairs { get; set; }
 
         public AppDbContext() : base() { }
         public AppDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions) { }
@@ -25,6 +26,15 @@ namespace DataLayer
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new PairConfiguration());
+
+            builder.Entity<TeacherPair>()
+                .HasNoKey()
+                .ToView(null);
+
+            builder.Entity<NearestPair>()
+                .HasNoKey()
+                .ToView(null);
+
             base.OnModelCreating(builder);
         }
     }

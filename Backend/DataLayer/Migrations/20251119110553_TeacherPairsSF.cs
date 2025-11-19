@@ -5,7 +5,7 @@
 namespace DataLayer.Migrations
 {
     /// <inheritdoc />
-    public partial class TeacherPairsFunction : Migration
+    public partial class TeacherPairsSF : Migration
     {
         private const string _createFunctionQuery = @"
                 CREATE OR REPLACE FUNCTION teacher_pairs_in_date_range(

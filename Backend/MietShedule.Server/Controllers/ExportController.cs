@@ -31,7 +31,7 @@ namespace MietShedule.Server.Controllers
         [HttpGet]
         public  async Task<FileContentResult> GetAdaptedDataAsync(CancellationToken cancellationToken)
         {
-            IEnumerable<PairExportDto> couples = await _coupleService.GetAllExportCouplesAsync(cancellationToken);
+            IEnumerable<PairExportDto> couples = await _coupleService.GetAllExportPairsAsync(cancellationToken);
             string json = JsonSerializer.Serialize(couples, jsonExportOptions);
 
             return new FileContentResult(Encoding.UTF8.GetBytes(json), "application/octet-stream")

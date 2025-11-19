@@ -27,9 +27,21 @@ namespace ServiceLayer.Services
 
             IEnumerable<MietPair> mietShedule = await _mietClientService.GetMietPairsAsync();
             IEnumerable<Pair> pairs = _adapterService.AdaptShedule(mietShedule);
-            await _appDbContext.TruncateAsync<Pair, Teacher, Group>();
-            await _appDbContext.AddRangeAsync(pairs);
-            await _appDbContext.SaveChangesAsync();
+
+            await using var transaction = await _appDbContext.Database.BeginTransactionAsync();
+
+            try
+            {
+                await _appDbContext.TruncateAsync<Pair, Teacher, Group>();
+                await _appDbContext.AddRangeAsync(pairs);
+                await _appDbContext.SaveChangesAsync();
+                await transaction.CommitAsync();
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
     }
 }
