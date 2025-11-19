@@ -8,6 +8,7 @@ export default function SheduleSection({ defaultGroup }) {
     const [group, setGroup] = useState(defaultGroup)
     const [groupsList, setGroupsList] = useState()
     const [shedule, setShedule] = useState()
+    const [loading, setLoading] = useState(false)
     const date = useDate()
     const [invalidGroup, setInvalidGroup] = useState(false)
 
@@ -23,11 +24,16 @@ export default function SheduleSection({ defaultGroup }) {
     // запрос расписания группы
     const fetchShedule = useCallback(async () => {
         if (group.length != 0) {
-            let query = `Shedule/${group}?dateString=${(new Date(date.value)).toISOString().slice(0, 10)}`
-            const sheduleResponse = await fetch(query)
-            if (sheduleResponse.status == 200) {
-                const sheduleRecords = await sheduleResponse.json()
-                setShedule(sheduleRecords)
+            setLoading(true)
+            try {
+                let query = `Shedule/${group}?dateString=${(new Date(date.value)).toISOString().slice(0, 10)}`
+                const sheduleResponse = await fetch(query)
+                if (sheduleResponse.status == 200) {
+                    const sheduleRecords = await sheduleResponse.json()
+                    setShedule(sheduleRecords)
+                }
+            } finally {
+                setLoading(false)
             }
         }
     }, [group, date.value])
@@ -75,14 +81,20 @@ export default function SheduleSection({ defaultGroup }) {
                 </>
             }
 
-            {shedule != undefined &&
+            {loading && (
+                <div className="spinner">
+                    <div className="spinner-circle"></div>
+                </div>
+            )}
+
+            {!loading && shedule != undefined &&
                 shedule.map(c =>
                     <ShedulePair key={keyExtractor(c)} {...c}></ShedulePair>
                 )
             }
 
             {
-                shedule != undefined && shedule.length == 0 &&
+                !loading && shedule != undefined && shedule.length == 0 &&
                 <h2>Нет занятий</h2>
             }
         </section>

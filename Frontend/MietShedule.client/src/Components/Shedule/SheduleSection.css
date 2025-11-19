@@ -1,24 +1,50 @@
 .shedule-form-in {
-    width: 260px !important;
-    height: 34px !important;
-    margin: 8px 0 !important;
-    font-size: 14px !important;
-    padding-left: 15px !important;
+  width: 260px !important;
+  height: 34px !important;
+  margin: 8px 0 !important;
+  font-size: 14px !important;
+  padding-left: 15px !important;
 }
 
 .shedule_section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .error-input {
-    border: 1px solid red !important;
+  border: 1px solid red !important;
 }
 
 @media (max-width: 768px) {
-    .shedule_section {
-        width: 100%;
-        box-sizing: border-box;
-    }
+  .shedule_section {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+.spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.spinner-circle {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #646cff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }

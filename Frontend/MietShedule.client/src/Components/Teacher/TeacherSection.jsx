@@ -8,6 +8,7 @@ export default function TeacherSection() {
     const [shedule, setShedule] = useState()
     const [teacher, setTeacher] = useState('')
     const [teacherList, setTeacherList] = useState()
+    const [loading, setLoading] = useState(false)
     const startDate = useDate()
     const endDate = useDate(new Date((new Date()).setDate((new Date()).getDate() + 7)))
     const [invalidTeacher, setInvalidTeacher] = useState(false)
@@ -24,13 +25,18 @@ export default function TeacherSection() {
     // запрос расписания преподавателя
     const fetchShedule = useCallback(async () => {
         if (teacher.length != 0) {
-            const formattedStartDate = new Date(startDate.value).toISOString().slice(0, 10)
-            const formattedEndDate = new Date(endDate.value).toISOString().slice(0, 10)
-            const sheduleResponse = await fetch(`Shedule/teacher/${teacher}?startDate=${formattedStartDate}&endDate=${formattedEndDate}`)
+            setLoading(true)
+            try {
+                const formattedStartDate = new Date(startDate.value).toISOString().slice(0, 10)
+                const formattedEndDate = new Date(endDate.value).toISOString().slice(0, 10)
+                const sheduleResponse = await fetch(`Shedule/teacher/${teacher}?startDate=${formattedStartDate}&endDate=${formattedEndDate}`)
 
-            if (sheduleResponse.status == 200) {
-                const sheduleRecords = await sheduleResponse.json()
-                setShedule(sheduleRecords)
+                if (sheduleResponse.status == 200) {
+                    const sheduleRecords = await sheduleResponse.json()
+                    setShedule(sheduleRecords)
+                }
+            } finally {
+                setLoading(false)
             }
         }
     }, [teacher, startDate.value, endDate.value])
@@ -62,7 +68,6 @@ export default function TeacherSection() {
         <section className="teacher-section">
             {teacherList != undefined &&
                 <>
-
                     <input
                         className={`teacher-input ${invalidTeacher ? "error-input" : ""}`}
                         type="text"
@@ -78,17 +83,22 @@ export default function TeacherSection() {
                 </>
             }
 
-            {shedule != undefined &&
+            {loading && (
+                <div className="spinner">
+                    <div className="spinner-circle"></div>
+                </div>
+            )}
+
+            {!loading && shedule != undefined &&
                 shedule.map(c =>
                     <TeacherPair key={keyExtractor(c)} {...c}></TeacherPair>
                 )
             }
 
             {
-                shedule != undefined && shedule.length == 0 &&
+                !loading && shedule != undefined && shedule.length == 0 &&
                 <h2>Нет занятий</h2>
             }
-
         </section>
     )
 }
