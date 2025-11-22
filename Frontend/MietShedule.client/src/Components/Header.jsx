@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
+import NearestSection from './Nearest/NearestSection';
 
 export default function Header() {
     const location = useLocation();
@@ -56,6 +57,21 @@ export default function Header() {
                         </li>
                         <li className="nav-item">
                             <Link
+                                to="/nearest"
+                                className={`nav-link ${isActive('/nearest') ? 'active text-white fw-semibold' : 'text-light-emphasis'}`}
+                                style={{
+                                    textDecoration: 'none',
+                                    borderBottom: isActive('/nearest') ? '2px solid #fff' : '2px solid transparent',
+                                    paddingBottom: '8px',
+                                    margin: '0 12px'
+                                }}
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                Ближайшие пары
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link
                                 to="/teacher"
                                 className={`nav-link ${isActive('/teacher') ? 'active text-white fw-semibold' : 'text-light-emphasis'}`}
                                 style={{
@@ -103,7 +119,7 @@ export default function Header() {
                         </li>
                     </ul>
 
-                    <form onSubmit={(e) => e.preventDefault()} className="d-none d-md-flex ms-3">  // +5px
+                    <form onSubmit={(e) => e.preventDefault()} className="d-none d-md-flex ms-3">
                         <a
                             href={`${import.meta.env.VITE_API_SWAGGER_URL}`}
                             className="btn btn-outline-success"

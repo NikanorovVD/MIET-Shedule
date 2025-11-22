@@ -4,11 +4,18 @@ import SheduleSection from './Components/Shedule/SheduleSection';
 import Header from './Components/Header';
 import TeacherSection from './Components/Teacher/TeacherSection';
 import ExportSection from './Components/Export/ExportSection';
+import NearestSection from './Components/Nearest/NearestSection';
 
 function SheduleSectionWrapper() {
     const [searchParams] = useSearchParams();
     const group = searchParams.get('group') || '';
     return <SheduleSection defaultGroup={group} />;
+}
+
+function NearestSectionWrapper() {
+    const [searchParams] = useSearchParams();
+    const group = searchParams.get('group') || '';
+    return <NearestSection defaultGroup={group} />;
 }
 
 function App() {
@@ -20,6 +27,7 @@ function App() {
                     <Route path='/' element={<SheduleSectionWrapper />} />
                     <Route path='/teacher' element={<TeacherSection />} />
                     <Route path='/export' element={<ExportSection />} />
+                    <Route path='/nearest' element={<NearestSectionWrapper />} />
                 </Routes>
             </BrowserRouter>
         </>
