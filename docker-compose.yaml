@@ -16,7 +16,7 @@ services:
       MietClient__GroupsUrl: "https://www.miet.ru/schedule/groups"
       MietClient__Cookies__CookiesHeader: "Cookie"
       MietClient__Cookies__CookiesString: ${COOKIES}
-      ParseSheduleOnStart: true
+      ParseSheduleOnStart: ${PARSE_ON_START}
       CronUpdateShedule: "0 0 0 * * ?"
       Format__DateFormat: "yyyy-MM-dd"
       Shedule__StartDate: "2025-09-01"
