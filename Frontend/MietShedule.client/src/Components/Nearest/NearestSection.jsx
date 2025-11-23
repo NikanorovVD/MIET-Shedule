@@ -2,18 +2,26 @@ import "./NearestSection.css"
 import { useCallback, useEffect, useState } from "react";
 import NearestPair from "./NearestPair";
 
-export default function NearestSection({ defaultGroup }) {
+export default function NearestSection({ defaultGroup, settings }) {
     const [group, setGroup] = useState(defaultGroup || "")
     const [groupsList, setGroupsList] = useState()
     const [shedule, setShedule] = useState()
     const [loading, setLoading] = useState(false)
     const [invalidGroup, setInvalidGroup] = useState(false)
-    const [filters, setFilters] = useState({
+
+    // Используем настройки по умолчанию из переданных settings
+    const [filters, setFilters] = useState((settings !== null) ? {
+        showAll: settings?.showAll,
+        showLectures: settings?.lectures,
+        showPracticals: settings?.seminars,
+        showLabs: settings?.labs
+    } : {
         showAll: false,
         showLectures: false,
         showPracticals: true,
         showLabs: true
     })
+
 
     // запрос списка групп
     const fetchGroupsList = useCallback(async () => {
@@ -172,7 +180,7 @@ export default function NearestSection({ defaultGroup }) {
                                 onChange={() => handleFilterChange('showPracticals')}
                             />
                             <div className="checkbox-custom"></div>
-                            <span>Практики</span>
+                            <span>Семинары</span>
                         </label>
 
                         <label className="filter-checkbox">

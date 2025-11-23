@@ -100,6 +100,21 @@ export default function Header() {
                                 Экспорт
                             </Link>
                         </li>
+                        <li className="nav-item">
+                            <Link
+                                to="/prefs"
+                                className={`nav-link ${isActive('/prefs') ? 'active text-white fw-semibold' : 'text-light-emphasis'}`}
+                                style={{
+                                    textDecoration: 'none',
+                                    borderBottom: isActive('/prefs') ? '2px solid #fff' : '2px solid transparent',
+                                    paddingBottom: '8px',
+                                    margin: '0 12px'
+                                }}
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                Настройки
+                            </Link>
+                        </li>
 
                         <li className="nav-item d-md-none">
                             <a
