@@ -1,0 +1,46 @@
+.schedule-pair {
+    margin: 10px;
+    border: 1px solid black;
+    width: 600px;
+}
+
+.schedule-order {
+    font-size: 20px;
+    background-color: #eaeaea;
+    width: 35px;
+}
+
+.schedule-name {
+    background-color: #eaeaea;
+    text-align: left;
+    font-size: 16px;
+}
+
+.schedule-teacher {
+    background-color: #eaeaea;
+    text-align: left;
+    font-size: 12px;
+    margin: 0;
+}
+
+.schedule-auditorium {
+    background-color: #eaeaea;
+    text-align: left;
+    font-size: 12px;
+    margin: 0;
+}
+
+.schedule-rest-time {
+    background-color: #eaeaea;
+    font-size: 14px;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .schedule-pair {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        margin: 10px 0;
+    }
+}

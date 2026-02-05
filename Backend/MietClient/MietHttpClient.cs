@@ -7,17 +7,17 @@ namespace MietClient
     public class MietHttpClient
     {
         private readonly HttpClient _httpClient;
-        private readonly string _sheduleUrl;
+        private readonly string _scheduleUrl;
         private readonly string _groupsUrl;
         private readonly MietCookies _cookies;
 
         public MietHttpClient(HttpClient httpClient, MietClientSettings settings)
-            : this(httpClient, settings.SheduleUrl, settings.GroupsUrl, settings.Cookies) { }
+            : this(httpClient, settings.ScheduleUrl, settings.GroupsUrl, settings.Cookies) { }
 
-        public MietHttpClient(HttpClient httpClient, string sheduleUrl, string groupsUrl, MietCookies cookies)
+        public MietHttpClient(HttpClient httpClient, string scheduleUrl, string groupsUrl, MietCookies cookies)
         {
             _httpClient = httpClient;
-            _sheduleUrl = sheduleUrl;
+            _scheduleUrl = scheduleUrl;
             _groupsUrl = groupsUrl;
             _cookies = cookies;
         }
@@ -25,14 +25,14 @@ namespace MietClient
         public async Task<IEnumerable<MietPair>> GetMietPairsAsync(CancellationToken cancellationToken = default)
         {
             IEnumerable<string> groups = await GetMietGroupsAsync(cancellationToken);
-            IEnumerable<MietPair> couples = await groups.SelectManyAsync(g => GetGroupSheduleAsync(g, cancellationToken));
+            IEnumerable<MietPair> couples = await groups.SelectManyAsync(g => GetGroupScheduleAsync(g, cancellationToken));
 
             return couples;
         }
 
-        private async Task<IEnumerable<MietPair>> GetGroupSheduleAsync(string group, CancellationToken cancellationToken = default)
+        private async Task<IEnumerable<MietPair>> GetGroupScheduleAsync(string group, CancellationToken cancellationToken = default)
         {
-            string fullUrl = $"{_sheduleUrl}/{group}";
+            string fullUrl = $"{_scheduleUrl}/{group}";
             HttpRequestMessage request = new(HttpMethod.Post, fullUrl);
             request.Headers.Add("Cookie", _cookies.CookiesString);
             request.Content = new FormUrlEncodedContent(
@@ -45,10 +45,10 @@ namespace MietClient
             if (!response.IsSuccessStatusCode)
                 throw new HttpRequestException($"Error requesting {fullUrl}", null, statusCode: response.StatusCode);
 
-            MietGroupShedule groupShedule = await JsonSerializer.DeserializeAsync<MietGroupShedule>(response.Content.ReadAsStream(cancellationToken), cancellationToken: cancellationToken)
+            MietGroupSchedule groupSchedule = await JsonSerializer.DeserializeAsync<MietGroupSchedule>(response.Content.ReadAsStream(cancellationToken), cancellationToken: cancellationToken)
                 ?? throw new SerializationException($"Deserialization fail for request: {fullUrl}");
 
-            return groupShedule.Data;
+            return groupSchedule.Data;
         }
 
         private async Task<IEnumerable<string>> GetMietGroupsAsync(CancellationToken cancellationToken = default)

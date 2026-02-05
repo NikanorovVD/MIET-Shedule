@@ -18,7 +18,7 @@ namespace ServiceLayer.Services
         private readonly IMapper _mapper;
         private readonly DateTime _semesterStartDate;
 
-        public PairService(AppDbContext appDbContext, DateFilterService dateFilterService, IgnoredFilterService ignoredFilterService, IMapper mapper, IOptions<SheduleSettings> options)
+        public PairService(AppDbContext appDbContext, DateFilterService dateFilterService, IgnoredFilterService ignoredFilterService, IMapper mapper, IOptions<ScheduleSettings> options)
         {
             _appDbContext = appDbContext;
             _dateFilterService = dateFilterService;
@@ -63,7 +63,7 @@ namespace ServiceLayer.Services
                 });
         }
 
-        public async Task<IEnumerable<NearestPair>> GetNearestPairsAsync(string group, string filterString,CancellationToken cancellationToken)
+        public async Task<IEnumerable<NearestPair>> GetNearestPairsAsync(string group, string filterString, CancellationToken cancellationToken)
         {
             return await _appDbContext.SPNearestPairs(_semesterStartDate, group, filterString).ToListAsync(cancellationToken);
         }

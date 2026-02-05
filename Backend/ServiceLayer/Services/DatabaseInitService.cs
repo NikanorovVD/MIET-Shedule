@@ -12,13 +12,13 @@ namespace ServiceLayer.Services
     public class DatabaseInitService : BackgroundService
     {
         private readonly AppDbContext _dbContext;
-        private readonly SheduleSettings _sheduleSettings;
+        private readonly ScheduleSettings _scheduleSettings;
 
         public DatabaseInitService(IServiceScopeFactory serviceScopeFactory)
         {
             var serviceProvider = serviceScopeFactory.CreateScope().ServiceProvider;
             _dbContext = serviceProvider.GetRequiredService<AppDbContext>();
-            _sheduleSettings = serviceProvider.GetRequiredService<IOptions<SheduleSettings>>().Value;
+            _scheduleSettings = serviceProvider.GetRequiredService<IOptions<ScheduleSettings>>().Value;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -31,7 +31,7 @@ namespace ServiceLayer.Services
         {
             if (!_dbContext.TimePairs.Any())
             {
-                IEnumerable<TimePair> timePairs = _sheduleSettings.Times.Select(s => new TimePair()
+                IEnumerable<TimePair> timePairs = _scheduleSettings.Times.Select(s => new TimePair()
                 {
                     Id = s.Order,
                     Start = s.Start,

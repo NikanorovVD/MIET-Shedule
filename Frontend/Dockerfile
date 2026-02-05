@@ -4,10 +4,10 @@ FROM node:24-alpine
 # Рабочий каталог
 WORKDIR /app
 
-COPY MietShedule.client/package*.json ./
+COPY MietSchedule.client/package*.json ./
 RUN npm install
 
-COPY MietShedule.client .
+COPY MietSchedule.client .
 RUN npm run build
 
 EXPOSE 5173

@@ -11,14 +11,14 @@ namespace ServiceLayer.Services
         private const int _daysInWeek = 7;
         private const int _weekTypesCount = 4;
 
-        public DateFilterService(IOptions<SheduleSettings> options)
+        public DateFilterService(IOptions<ScheduleSettings> options)
         {
             _startDate = options.Value.StartDate;
         }
 
         public Expression<Func<Pair, bool>> DateFilter(DateTime date)
         {
-            if(date.Date < _startDate.Date) return c => false;
+            if (date.Date < _startDate.Date) return c => false;
             return c => c.Day == DayOfWeek(date) && c.WeekType == GetWeekType(date);
         }
 

@@ -11,15 +11,15 @@ services:
       - "8080:80"
     environment:
       ASPNETCORE_URLS: https://*:80;http://*:50
-      ConnectionStrings__DefaultConnection: "User ID=${DB_USER};Password=${DB_PASSWORD};Host=db;Port=5432;Database=shedule;"
-      MietClient__SheduleUrl: "https://www.miet.ru/schedule/data"
+      ConnectionStrings__DefaultConnection: "User ID=${DB_USER};Password=${DB_PASSWORD};Host=db;Port=5432;Database=schedule;"
+      MietClient__ScheduleUrl: "https://www.miet.ru/schedule/data"
       MietClient__GroupsUrl: "https://www.miet.ru/schedule/groups"
       MietClient__Cookies__CookiesHeader: "Cookie"
       MietClient__Cookies__CookiesString: ${COOKIES}
-      ParseSheduleOnStart: ${PARSE_ON_START}
-      CronUpdateShedule: "0 0 0 * * ?"
+      ParseScheduleOnStart: ${PARSE_ON_START}
+      CronUpdateSchedule: "0 0 0 * * ?"
       Format__DateFormat: "yyyy-MM-dd"
-      Shedule__StartDate: "2025-09-01"
+      Schedule__StartDate: "2025-09-01"
     volumes:
       - logs:/app/logs
   db:

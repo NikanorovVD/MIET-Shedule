@@ -1,4 +1,4 @@
-# MIET-Shedule
+# MIET-Schedule
 
 ![Скриншот приложения](images/screenshot.jpg)
 
