@@ -8,7 +8,7 @@ services:
       db:
         condition: service_healthy
     ports:
-      - "8080:80"
+      - "${BACKEND_PORT:-8080}:80"
     environment:
       ASPNETCORE_URLS: https://*:80;http://*:50
       ConnectionStrings__DefaultConnection: "User ID=${DB_USER};Password=${DB_PASSWORD};Host=db;Port=5432;Database=schedule;"
@@ -40,7 +40,7 @@ services:
       context: ./Frontend
       dockerfile: ./Dockerfile
     ports:
-      - "5173:5173"
+      - "${FRONTEND_PORT:-5173}:5173"
     environment:
       VITE_APP_URL: "https://backend:80"
       VITE_API_SWAGGER_URL: ${API_SWAGGER_URL}
