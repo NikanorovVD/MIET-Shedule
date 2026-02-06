@@ -1,8 +1,7 @@
 # MIET-Schedule
 
-![Скриншот приложения](images/screenshot.jpg)
-
 ### Приложение для работы с расписанием МИЭТ
+![](images/screenshot.png)
 
 **Live version:** https://81.177.167.247:5173 
 
