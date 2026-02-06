@@ -19,7 +19,7 @@ services:
       ParseScheduleOnStart: ${PARSE_ON_START}
       CronUpdateSchedule: "0 0 0 * * ?"
       Format__DateFormat: "yyyy-MM-dd"
-      Schedule__StartDate: "2025-09-01"
+      Schedule__StartDate: ${SCHEDULE_START_DATE}
     volumes:
       - logs:/app/logs
   db:
